@@ -13,27 +13,28 @@ include('include/include.php'); ?>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
-<table>
-<tbody>
-<?php
-
-foreach($transactions as $transaction){
-	$amount = round($transaction['amounts']['cleared']/10000, 2);
-	$balance = round($transaction['running_balance']/10000, 2);
-	echo '<tr>';
-	echo '<td>' . $transaction['description'] . '</td>';
-	echo '<td>' . $amount . '</td>';
-	echo '<td>' . $balance . '</td>';
-	echo '</tr>';
-}
-
-?>
-</tbody>
-</table>
 
 <?php
+
+echo '<a href="/simpler/database_refresh.php">Refresh Database</a>';
+
 echo '<pre>';
-var_dump($transactions); ?>
+var_dump($test);
+
+
+
+// foreach($transactions as $transaction){
+// 	$amount = round($transaction['amounts']['cleared']/10000, 2);
+// 	$balance = round($transaction['running_balance']/10000, 2);
+// 	echo '<tr>';
+// 	echo '<td>' . $transaction['description'] . '</td>';
+// 	echo '<td>' . $amount . '</td>';
+// 	echo '<td>' . $balance . '</td>';
+// 	echo '</tr>';
+// }
+
+// echo '<pre>';
+// var_dump($transactions); ?>
 
 
 
