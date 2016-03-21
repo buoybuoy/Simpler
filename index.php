@@ -1,5 +1,5 @@
 <?php 
-error_reporting(E_ALL);
+
 include('include/include.php'); ?>
 
 <!DOCTYPE html>
@@ -10,40 +10,47 @@ include('include/include.php'); ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title> </title>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
+<div class="container">
+	<div class="row">
+		<div class="center">
+			<h1>Simpl<em>er</em></h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="center">
+			<h3><?echo $title;?></h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-8 col-xs-offset-2">
+			<table class="table">
+				<tbody>
 
-<?php
+				<?php
 
-echo '<a href="/simpler/database_refresh.php">Refresh Database</a>';
+				foreach($transactions as $transaction){
+					echo '<tr>';
+					echo '<td class="date">' . date("M j", strtotime($transaction['date'])) . '</td>';
+					echo '<td>' . $transaction['description'] . '</td>';
+					if ($transaction['transaction_type'] == "debit"){
+						echo '<td class="align-right negative">' . number_format($transaction['amount'], 2, '.', '') . '<span></td>';
+					} else {
+						echo '<td class="align-right positive transaction_amount">+ ' . number_format($transaction['amount'], 2, '.', '') . '</td>';
+					}
+					echo '</tr>';
+				}
 
-echo '<pre>';
-var_dump($test);
+				?>
 
-
-
-// foreach($transactions as $transaction){
-// 	$amount = round($transaction['amounts']['cleared']/10000, 2);
-// 	$balance = round($transaction['running_balance']/10000, 2);
-// 	echo '<tr>';
-// 	echo '<td>' . $transaction['description'] . '</td>';
-// 	echo '<td>' . $amount . '</td>';
-// 	echo '<td>' . $balance . '</td>';
-// 	echo '</tr>';
-// }
-
-// echo '<pre>';
-// var_dump($transactions); ?>
-
-
-
-
-
-
-
-
-
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 
 
 

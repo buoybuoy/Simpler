@@ -1,3 +1,39 @@
+body{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 15px;
+	line-height: 1em;
+	font-weight: 400;
+	color: #666;
+}
+
 h1{
+	margin-bottom: 30px;
+}
+
+.center{
 	text-align: center;
+}
+
+table{
+	margin-top: 30px;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	border-right: none;
+	border-left: none;
+	vertical-align: center;
+}
+
+.align-right{
+	text-align: right;
+}
+
+.positive{
+	color: #54bf98;
+}
+
+.negative{
+	color: #e96e57;
 }

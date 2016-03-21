@@ -16,7 +16,6 @@ foreach($raw_simple_data['transactions'] as $key => $raw_transaction){
 	$transactions[$key]['last_modified'] = $data->time($raw_transaction['times']['last_modified']);
 	$transactions[$key]['description'] = addslashes($raw_transaction['description']);
 	$transactions[$key]['memo'] = addslashes($raw_transaction['memo']);
-	// $transactions[$key]['memo'] = 'test';
 	$transactions[$key]['category'] = addslashes($raw_transaction['categories'][0]['name']);
 	$transactions[$key]['category_type'] = addslashes($raw_transaction['categories'][0]['folder']);
 	$transactions[$key]['transaction_type'] = $raw_transaction['bookkeeping_type'];
@@ -28,6 +27,6 @@ foreach($transactions as $add_transaction){
 	$database->add_transaction($add_transaction);
 }
 
-
+header('Location:' . $config->base_url);
 
 ?>
