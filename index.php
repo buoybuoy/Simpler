@@ -46,8 +46,6 @@ include('template/partials/_titlebar.php');
 </div>
 
 
-<a href="#" data-toggle="modal" data-target="#transactionModal" data-transaction="the id">test</a>
-
 <div class="modal fade" id="transactionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
