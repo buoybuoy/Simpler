@@ -1,0 +1,160 @@
+$red 	:	#e96e57;
+$green	: 	#54bf98;
+$navy	:	#346b83;
+$black	:	#3e474c;
+$gray 	:	#788991;
+
+body{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 15px;
+	line-height: 1em;
+	font-weight: 400;
+	color: $gray;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+	font-weight: 400;
+}
+
+nav{
+	font-size: 13px;
+	
+	.nav-left{
+		letter-spacing: 3px;
+		text-transform: uppercase;
+	}
+
+	.container-fluid{
+		max-width: 1140px;
+	}
+}
+
+.navbar{
+	margin-bottom: 0;
+}
+
+.navbar-default{
+	background-color: #fff;
+	border-top: 4px solid #eee;
+
+	.navbar-nav>.active>a, 
+	.navbar-nav>.active>a:focus, 
+	.navbar-nav>.active>a:hover{
+		color: $red;
+		border-top: 4px solid $red;
+		background-color: #fff;
+		box-sizing: initial;
+		position: relative;
+		top: -4px; 
+	}	
+}
+
+.navbar-nav>li>a, .navbar-brand{
+	padding: 20px 0;
+	margin: 0 15px;
+}
+
+.navbar-brand{
+	margin-right: 30px;
+	
+	.logo_icon{
+		width: 25px;
+		height: 25px;
+		float: left;
+		border-radius: 13px;
+		position: relative;
+		bottom: 2px;
+		opacity: 0.8;
+	}
+	.li1{
+		left: 7px;
+		border: 2px solid #ed7c64;
+	}
+	.li2{
+		right: 11px;
+		border: 2px solid #3c8a9a;
+	}
+}
+
+.center{
+	text-align: center;
+}
+
+.logo{
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.titlebar{
+	background: $navy;
+	color: #fff;
+	min-height: 80px;
+	position: relative;
+	
+	.container{
+		padding-left: 20px;
+	}
+	
+	h3{
+		font-weight: 400;
+	}
+
+	.month_nav{
+		background: rgba(256, 256, 256, 0.1);
+		height: 100%;
+		position: absolute;
+		display: flex;
+		align-items: center;
+		top: 0;
+		padding: 10px;
+		color: #fff;
+		transition: all 0.3s ease-out;
+		font-size: 30px;
+	}
+
+	.month_nav:hover{
+		text-decoration: none;
+		background: rgba(256, 256, 256, 0.2);
+	}
+
+	.next{
+		right: 0;
+	}
+
+	.prev{
+		left: 0;
+	}
+}
+
+.table>tbody>tr>td, 
+.table>tbody>tr>th, 
+.table>tfoot>tr>td, 
+.table>tfoot>tr>th, 
+.table>thead>tr>td, 
+.table>thead>tr>th{
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	border-right: none;
+	border-left: none;
+	vertical-align: center;
+}
+
+.align-right{
+	text-align: right;
+}
+
+.positive{
+	color: $green;
+}
+
+.negative{
+	color: $red;
+}
+
+.right-aside{
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	height: 100%;
+}
