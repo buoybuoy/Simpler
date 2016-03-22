@@ -11,8 +11,8 @@ if ($view->page == 'activity'){ ?>
 <?php } elseif ($view->page == 'budget'){ ?>
 
 	<h3>
-		<a href="#" data-toggle="modal" data-target="#budgetModal">
-			Budget
+		<a href="#" data-toggle="modal" data-target="#budgetModal" class="hover-animate hover-animate-left">
+			Budget <i class="fa fa-cog"></i>
 		</a>
 	</h3>
 	<table class="table">

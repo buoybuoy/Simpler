@@ -180,3 +180,22 @@ nav{
 	border-left: 1px solid #ddd;
 	height: 100%;
 }
+
+.hover-animate i{
+	transition: all 0.2s ease-out;
+	position: relative;
+	// bottom: -2px;
+	left: 30px;
+	opacity: 0;
+	transform: rotate(180deg);
+}
+
+.hover-animate-left:hover i{
+	left: 7px;
+	opacity: 1;
+	transform: rotate(0deg);
+}
+
+.modal-backdrop{
+	background-color: darken($navy, 20%);
+}
