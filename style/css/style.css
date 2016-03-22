@@ -41,20 +41,30 @@ nav {
 
 .navbar-brand {
   margin-right: 30px; }
-  .navbar-brand .logo_icon {
-    width: 25px;
-    height: 25px;
-    float: left;
-    border-radius: 13px;
+  .navbar-brand .logo_mark {
     position: relative;
-    bottom: 2px;
-    opacity: 0.8; }
-  .navbar-brand .li1 {
-    left: 7px;
-    border: 2px solid #ed7c64; }
-  .navbar-brand .li2 {
-    right: 11px;
-    border: 2px solid #3c8a9a; }
+    bottom: 5px;
+    left: 5px;
+    display: inline-block;
+    width: 25px;
+    height: 30px;
+    float: left;
+    margin-right: 15px; }
+    .navbar-brand .logo_mark .logo_icon {
+      width: 18px;
+      height: 30px;
+      border-radius: 13px;
+      position: absolute;
+      opacity: 0.8; }
+    .navbar-brand .logo_mark .li1 {
+      border: 2px solid #ed7c64;
+      transform: rotate(-40deg); }
+    .navbar-brand .logo_mark .li2 {
+      border: 2px solid #3c8a9a;
+      transform: rotate(15deg); }
+    .navbar-brand .logo_mark .li3 {
+      border: 2px solid #70a6b2;
+      transform: rotate(80deg); }
 
 .center {
   text-align: center; }

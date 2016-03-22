@@ -60,22 +60,35 @@ nav{
 .navbar-brand{
 	margin-right: 30px;
 	
-	.logo_icon{
-		width: 25px;
-		height: 25px;
-		float: left;
-		border-radius: 13px;
+	.logo_mark{
 		position: relative;
-		bottom: 2px;
-		opacity: 0.8;
-	}
-	.li1{
-		left: 7px;
-		border: 2px solid #ed7c64;
-	}
-	.li2{
-		right: 11px;
-		border: 2px solid #3c8a9a;
+		bottom: 5px;
+		left: 5px;
+		display: inline-block;
+		width: 25px;
+		height: 30px;
+		float: left;
+		margin-right: 15px;
+
+		.logo_icon{
+			width: 18px;
+			height: 30px;
+			border-radius: 13px;
+			position: absolute;
+			opacity: 0.8;
+		}
+		.li1{
+			border: 2px solid #ed7c64; // red
+			transform: rotate(-40deg);
+		}
+		.li2{
+			border: 2px solid #3c8a9a; // dark blue
+			transform: rotate(15deg);
+		}
+		.li3{
+			border: 2px solid #70a6b2; //light blue
+			transform: rotate(80deg);
+		}
 	}
 }
 

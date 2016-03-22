@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand logo" href="#"><div class="logo_icon li1"></div><div class="logo_icon li2"></div>Simpler</a>
+      <a class="navbar-brand logo" href="#"><div class="logo_mark"><div class="logo_icon li1"></div><div class="logo_icon li2"></div><div class="logo_icon li3"></div></div>Simpler</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
