@@ -4,9 +4,12 @@ class view extends controller {
 
 	public $title;
 
+	public $action_page;
+
 	function __construct($get){
 		parent::__construct($get);
 		$this->title = $this->dt->format('F Y');
+		$this->action_page = 'action.php?' . $_SERVER['QUERY_STRING'];
 	}
 
 	function link_relative_month($offset){

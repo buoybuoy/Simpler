@@ -33,7 +33,7 @@ class database {
 	function select($amount,$table,$stipulation){
 		try {
 			if ($stipulation != null){
-				$results = $this->db->query("SELECT $amount FROM `$table` WHERE $stipulation");
+				$results = $this->db->query("SELECT $amount FROM `$table` $stipulation");
 			} else {
 				$results = $this->db->query("SELECT $amount FROM `$table`");
 			}

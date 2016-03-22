@@ -14,7 +14,7 @@ include('template/partials/_titlebar.php');
 
 <div class="container">
 	<div class="row">
-		<div class="col-xs-8">
+		<div class="col-xs-7">
 			<table class="table">
 				<tbody>
 
@@ -39,7 +39,7 @@ include('template/partials/_titlebar.php');
 				</tbody>
 			</table>
 		</div>
-		<div class="col-xs-4 right-aside">
+		<div class="col-xs-5 right-aside">
 			<?php include('template/partials/_rightaside.php'); ?>
 		</div>
 	</div>

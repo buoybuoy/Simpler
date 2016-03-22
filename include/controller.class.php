@@ -25,7 +25,7 @@ class controller extends database {
 		$this->set_page($get);
 		$this->set_all_categories();
 		$this->set_budget();
-		$this->transactions = $this->select('*','transactions', "MONTH(date) = $this->month AND YEAR(date) = $this->year ORDER BY `date` DESC");
+		$this->transactions = $this->select('*','transactions', "WHERE (MONTH(date) = $this->month AND YEAR(date) = $this->year) OR (budget_month = $this->month AND budget_year = $this->year) ORDER BY `date` DESC");
 		$this->total_cash_flow();
 	}
 
@@ -62,14 +62,14 @@ class controller extends database {
 
 	function set_budget(){
 		$this->budget = array();
-		$budgeted_amounts = $this->select('*','budgeted_amounts', "`month` = $this->month AND `year` = $this->year ORDER BY `amount` DESC");
+		$budgeted_amounts = $this->select('*','budgeted_amounts', "WHERE `month`=$this->month AND `year`=$this->year ORDER BY `amount` DESC");
 		foreach ($budgeted_amounts as $budgeted_amount){
 			$budget_id = $budgeted_amount['id'];
 			$this->budget[$budget_id] = array(
 				'month' 		=> 		$budgeted_amount['month'],
 				'year' 			=> 		$budgeted_amount['year'],
 				'category_id' 	=> 		$budgeted_amount['category_id'],
-				'category' 		=> 		$this->all_categories[$budgeted_amount['category_id']]['name'],
+				'category' 		=> 		$this->all_categories[$budgeted_amount['category_id']],
 				'limit'			=> 		$budgeted_amount['amount'],
 				'spent'			=> 		0,
 				'remaining'		=> 		$budgeted_amount['amount']
@@ -93,24 +93,22 @@ class controller extends database {
 	    $this->raw_statement($sql);
 	}
 
-	// function add_budgeted_amount($budget_array){
-	// 	$table = 'transactions';
-	// 	$fields = '`' . implode('`,`', array_keys($transaction)) . '`';
-	// 	$values = "'" . implode("','", $transaction) . "'";
-	// 	extract($transaction);
-	//     $sql = "INSERT INTO {$table} ($fields) VALUES($values) ON DUPLICATE KEY UPDATE
-	// 	    `date` = '$date',
-	// 	    `last_modified` = '$last_modified',
-	// 	    `raw_description` = '$raw_description',
-	// 	    `description` = '$description',
-	// 	    `memo` = '$memo',
-	// 	    `category` = '$category',
-	// 	    `transaction_type` = '$transaction_type',
-	// 	    `amount` = '$amount',
-	// 	    `running_balance` = '$running_balance'
-	// 	";
-	//     $this->raw_statement($sql);
-	// }
-	// }
+	function update_budget($post){
+		$table = 'budgeted_amounts';
+		$fields = '`' . implode('`,`', array_keys($post)) . '`';
+		$values = "'" . implode("','", $post) . "'";
+		extract($post);
+	    $sql = "INSERT INTO {$table} ($fields) VALUES($values) ON DUPLICATE KEY UPDATE
+		    `amount` = '$amount'
+		";
+	    $this->raw_statement($sql);
+	}
+
+	function update_transaction($post){
+		$table = 'transactions';
+		extract($post);
+	    $sql = "UPDATE {$table} SET `budget_id`='$budget_id', `budget_month=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
+	    $this->raw_statement($sql);
+	}
 
 }
