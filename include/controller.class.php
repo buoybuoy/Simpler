@@ -26,6 +26,7 @@ class controller extends database {
 		$this->set_budget();
 		$this->transactions = $this->select('*','transactions', "WHERE (MONTH(date) = $this->month AND YEAR(date) = $this->year) OR (budget_month = $this->month AND budget_year = $this->year) ORDER BY `date` DESC");
 		$this->total_cash_flow();
+		$this->balance_budget();
 	}
 
 	function total_cash_flow(){
@@ -112,6 +113,22 @@ class controller extends database {
 	    	$sql = "UPDATE {$table} SET `budget_id`='$budget_id', `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
 	    }
 	    $this->raw_statement($sql);
+	}
+
+	function balance_budget(){
+		foreach($this->transactions as $transaction){
+			if (isset($transaction['budget_id'])){
+				if ($transaction['transaction_type'] == 'debit'){
+					$this->budget[$transaction['budget_id']]['spent'] += $transaction['amount'];
+				} else {
+					$this->budget[$transaction['budget_id']]['spent'] -= $transaction['amount'];
+				}
+			}
+		}
+		foreach($this->budget as $key => $budget){
+			$remaining = $budget['limit'] - $budget['spent'];
+			$this->budget[$key]['remaining'] = $remaining;
+		}
 	}
 
 }
