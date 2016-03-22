@@ -15,9 +15,7 @@ class database {
 			$this->db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 			$this->db->exec("SET NAMES 'utf8'"); 
 		} catch (Exception $e) {
-			$e->getTraceAsString();
-			// echo "There was a problem connecting to the database;";
-			echo $e;
+			echo $e->getTraceAsString();
 			exit;
 		}
 	}
@@ -27,14 +25,24 @@ class database {
 			$results = $this->db->prepare($sql);
 			$results->execute();
 		}catch( Exception $e ) {
-			$e->getMessage();
-			echo $e;
+			echo $e->getMessage();
 			exit;
 		}
 	}
 
+	function select($amount,$table,$stipulation){
+		try {
+			if ($stipulation != null){
+				$results = $this->db->query("SELECT $amount FROM `$table` WHERE $stipulation ORDER BY `date` DESC");
+			} else {
+				$results = $this->db->query("SELECT $amount FROM `$table` ORDER BY `date` DESC");
+			}
+		}catch( PDOException $e ) {
+			echo $e->getMessage();
+			exit;
+		}
+		return $results->fetchAll(PDO::FETCH_ASSOC);
 
+	}
 }
-
-$database = new database;
 
