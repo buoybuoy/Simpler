@@ -18,3 +18,8 @@ $('#transactionModal').on('show.bs.modal', function (event) {
   modal.find('#id').val(transactionId)
   modal.find('#description').text(description)
 })
+
+$('#budgetModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var modal = $(this)
+})

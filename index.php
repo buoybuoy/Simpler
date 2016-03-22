@@ -23,7 +23,8 @@ include('template/partials/_titlebar.php');
 	</div>
 </div>
 
-<?php include('template/partials/_modal.php'); ?>
+<?php include('template/partials/_transaction_modal.php'); ?>
+<?php include('template/partials/_budget_modal.php'); ?>
 
 
 
