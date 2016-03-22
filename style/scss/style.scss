@@ -12,6 +12,12 @@ body{
 	color: $gray;
 }
 
+a, a:hover, a:focus, a:active{
+	color: $gray;
+	text-decoration: none;
+	outline: none;
+}
+
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
 	font-weight: 400;
 }
