@@ -24,7 +24,10 @@ nav {
   border-top: 4px solid #eee; }
   .navbar-default .navbar-nav > .active > a,
   .navbar-default .navbar-nav > .active > a:focus,
-  .navbar-default .navbar-nav > .active > a:hover {
+  .navbar-default .navbar-nav > .active > a:hover,
+  .navbar-default .navbar-nav > .open > a,
+  .navbar-default .navbar-nav > .open > a:focus,
+  .navbar-default .navbar-nav > .open > a:hover {
     color: #e96e57;
     border-top: 4px solid #e96e57;
     background-color: #fff;

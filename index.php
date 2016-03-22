@@ -4,8 +4,6 @@ include('include/config.class.php');
 include('include/database.class.php');
 include('include/view.class.php');
 
-$transactions = $view->month_transactions();
-
 include('template/partials/_dochead.php');
 include('template/partials/_nav.php');
 include('template/partials/_titlebar.php');
@@ -21,7 +19,7 @@ include('template/partials/_titlebar.php');
 
 				<?php
 
-				foreach($transactions as $transaction){
+				foreach($view->transactions as $transaction){
 					echo '<tr>';
 					echo '<td class="date">' . date("M j", strtotime($transaction['date'])) . '</td>';
 					echo '<td>' . $transaction['description'] . '</td>';
@@ -39,7 +37,7 @@ include('template/partials/_titlebar.php');
 			</table>
 		</div>
 		<div class="col-xs-4 right-aside">
-			<h3>Info</h3>
+			<?php include('template/partials/_rightaside.php'); ?>
 		</div>
 	</div>
 </div>
