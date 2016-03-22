@@ -16,9 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		if ($action == 'add_category'){
 
-			$view->add_category($_POST['category_name']);
+			die('yup, this is necessary');
+			// $view->add_category($_POST['category_name']);
 
-		} elseif ($action == 'update_amount') {
+		} elseif ($action == 'add_to_budget') {
 
 			if ($_POST['category_id'] == 'new'){
 				$view->add_category($_POST['category_name']);
@@ -30,9 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 			$view->update_budget($_POST);
 
-		} elseif ($action = 'update_transaction'){
+		} elseif ($action == 'update_transaction'){
 
 			$view->update_transaction($_POST);
+
+		} elseif ($action == 'update_amount'){
+
+			$view->update_budget($_POST);
 
 		}
 	}

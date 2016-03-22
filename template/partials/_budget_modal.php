@@ -8,14 +8,32 @@
 			<div class="modal-body">
 				<table class="table">
 					<thead>
-						<th>Add New Budget Category</th>
+						<th>Edit Existing Categories</th>
 					<thead>
 					<tbody>
-					<?php foreach ($view->unused_categories as $key => $unused_category){ ?>
+					<?php foreach ($view->budget as $key => $category){ ?>
 						<tr>
 							<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
 								<!-- <div class="form-group"> -->
 									<input type="hidden" name="action" value="update_amount">
+									<input type="hidden" name="id" value="<?php echo $key; ?>">
+									<input type="hidden" name="month" value="<?php echo $view->month; ?>">
+									<input type="hidden" name="year" value="<?php echo $view->year; ?>">
+									<td><?php echo $category['category'] ?></td>
+									<td><input type="text" class="form-control table-input" id="amount" value="<?php echo $category['limit']; ?>" name="amount"></td>
+								<!-- </div> -->
+								<td><button type="submit" class="btn btn-default">Change</button></td>
+							</form>
+						</tr>
+					<?php } ?>
+					<thead>
+						<th>Add New Budget Category</th>
+					<thead>
+					<?php foreach ($view->unused_categories as $key => $unused_category){ ?>
+						<tr>
+							<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
+								<!-- <div class="form-group"> -->
+									<input type="hidden" name="action" value="add_to_budget">
 									<input type="hidden" name="category_id" value="<?php echo $key; ?>">
 									<input type="hidden" name="month" value="<?php echo $view->month; ?>">
 									<input type="hidden" name="year" value="<?php echo $view->year; ?>">
@@ -29,7 +47,7 @@
 						<tr>
 							<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
 								<!-- <div class="form-group"> -->
-									<input type="hidden" name="action" value="update_amount">
+									<input type="hidden" name="action" value="add_to_budget">
 									<input type="hidden" name="category_id" value="new">
 									<input type="hidden" name="month" value="<?php echo $view->month; ?>">
 									<input type="hidden" name="year" value="<?php echo $view->year; ?>">
@@ -41,7 +59,6 @@
 						</tr>
 					</tbody>
 				</table>
-				
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

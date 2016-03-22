@@ -1,20 +1,8 @@
-modal window for viewing/editing full item info
-
-month links
-
-month budget info
-
 right sidebar
-	total
-	monthly budget
 	zero date
 	spending stats?
 
 pages
-	home
-		default to current month
-		view by budget categories or days
-	upload
 	budget categories
 	rules
 		rule based on raw description or category

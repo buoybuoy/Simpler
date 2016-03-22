@@ -27,6 +27,8 @@ class controller extends database {
 		$this->transactions = $this->select('*','transactions', "WHERE (MONTH(date) = $this->month AND YEAR(date) = $this->year) OR (budget_month = $this->month AND budget_year = $this->year) ORDER BY `date` DESC");
 		$this->total_cash_flow();
 		$this->balance_budget();
+
+		// var_dump($this->all_categories); die();
 	}
 
 	function total_cash_flow(){
