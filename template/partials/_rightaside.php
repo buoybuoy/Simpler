@@ -26,7 +26,7 @@ if ($view->page == 'activity'){ ?>
 	<tbody>
 	<?php foreach ($view->unused_categories as $key => $unused_category){ ?>
 		<tr>
-			<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post">
+			<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
 				<!-- <div class="form-group"> -->
 					<input type="hidden" name="action" value="update_amount">
 					<input type="hidden" name="category_id" value="<?php echo $key; ?>">
@@ -40,7 +40,7 @@ if ($view->page == 'activity'){ ?>
 		</tr>
 	<?php } ?>
 		<tr>
-			<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post">
+			<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
 				<!-- <div class="form-group"> -->
 					<input type="hidden" name="action" value="update_amount">
 					<input type="hidden" name="category_id" value="new">

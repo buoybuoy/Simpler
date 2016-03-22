@@ -10,7 +10,6 @@ class controller extends database {
 	public $budget;
 
 	public $all_categories;
-	public $used_categories;
 	public $unused_categories;
 
 	public $total_debit;
@@ -107,7 +106,11 @@ class controller extends database {
 	function update_transaction($post){
 		$table = 'transactions';
 		extract($post);
-	    $sql = "UPDATE {$table} SET `budget_id`='$budget_id', `budget_month=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
+		if ($budget_id == 'uncategorized'){
+			$sql = "UPDATE {$table} SET `budget_id`=NULL, `budget_month`=NULL, `budget_year`=NULL WHERE `id`='$id'";
+		} else {
+	    	$sql = "UPDATE {$table} SET `budget_id`='$budget_id', `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
+	    }
 	    $this->raw_statement($sql);
 	}
 

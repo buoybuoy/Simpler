@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		} elseif ($action = 'update_transaction'){
 
 			$view->update_transaction($_POST);
+
 		}
 	}
 }
