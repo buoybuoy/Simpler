@@ -44,5 +44,12 @@ class database {
 		return $results->fetchAll(PDO::FETCH_ASSOC);
 
 	}
+
+	function insert($table, $array_of_values){
+		$fields = '`' . implode('`,`', array_keys($array_of_values)) . '`';
+		$values = "'" . implode("','", $array_of_values) . "'";
+	    $sql = "INSERT INTO {$table} ($fields) VALUES($values)";
+	    $this->raw_statement($sql);
+	}
 }
 

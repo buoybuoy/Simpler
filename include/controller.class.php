@@ -29,7 +29,7 @@ class controller extends database {
 		$this->set_page($get);
 		$this->set_all_categories();
 		$this->set_budget();
-		$this->transactions = $this->select('*','transactions', "WHERE (MONTH(date) = $this->month AND YEAR(date) = $this->year) OR (budget_month = $this->month AND budget_year = $this->year) ORDER BY `date` DESC");
+		$this->transactions = $this->select('*','transactions', "WHERE `budget_month` = $this->month AND `budget_year` = $this->year ORDER BY `date` DESC");
 		$this->total_cash_flow();
 		$this->balance_budget();
 	}
@@ -74,7 +74,7 @@ class controller extends database {
 
 	function balance_budget(){
 		foreach($this->transactions as $transaction){
-			if (isset($transaction['budget_id'])){
+			if (isset($transaction['budget_id']) && $transaction['budget_id'] != 0){
 				if ($transaction['transaction_type'] == 'debit'){
 					$this->budget[$transaction['budget_id']]['spent'] += $transaction['amount'];
 				} else {
@@ -100,7 +100,7 @@ class controller extends database {
 	}
 
 	function set_all_categories(){
-		$categories = $this->select('*','categories', null);
+		$categories = $this->select('*','budget_categories', null);
 		$this->all_categories = array();
 		foreach ($categories as $category){
 			$this->all_categories[$category['id']] = $category['name'];
@@ -109,9 +109,8 @@ class controller extends database {
 	}
 
 	function add_category($name){
-		$table = 'categories';
-	    $sql = "INSERT INTO {$table} (`name`) VALUES ('$name')";
-	    $this->raw_statement($sql);
+		$values = array('name' => $name);
+	    $this->insert('budget_categories', $values);
 	}
 
 	function update_budget($post){
@@ -125,32 +124,31 @@ class controller extends database {
 	    $this->raw_statement($sql);
 	}
 
-// fix this spaghetti piece of shit function
-
 	function update_transaction($post){
 		$table = 'transactions';
 		extract($post);
 		$_dt = $this->dt;
 
-		if (isset($budget_id) && $budget_id == 'uncategorized'){
-			$sql = "UPDATE {$table} SET `budget_id`=NULL, `budget_month`=NULL, `budget_year`=NULL WHERE `id`='$id'";
-		} else {
+		if (isset($budget_id)){
 			if ($budget_month == 'next' OR $budget_month == 'prev'){
 				if ($budget_month == 'next'){
 					$offset = 1;
 				} elseif ($budget_month == 'prev'){
 					$offset = -1;
 				}
+				$budget_id = 0;
 				$_dt->modify('first day of' . $offset . ' month');
 				$budget_month = $_dt->format('m');
 				$budget_year = $_dt->format('Y');
-				$sql = "UPDATE {$table} SET `budget_id`=NULL, `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
-			} else {
-	    		$sql = "UPDATE {$table} SET `budget_id`='$budget_id', `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
-	    	}
+			}
+		    $sql = "UPDATE {$table} SET `budget_id`='$budget_id', `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
+		    $this->raw_statement($sql);
 		}
-		var_dump($sql); die();
-	    $this->raw_statement($sql);
+	}
+
+	// expects keyed array with 'trigger_type', 'trigger', 'budget_categories_id'
+	function add_trigger($array){
+		$this->insert('category_triggers', $array);
 	}
 
 }

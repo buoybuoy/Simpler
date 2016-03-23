@@ -30,11 +30,16 @@ class upload extends database {
 		    `running_balance` = '$running_balance'
 		";
 	    $this->raw_statement($sql);
+
+	    // evaulate rules here (if possible)
 	}
 
 	function format_data($raw_simple_data){
 		$transactions = array();
 		foreach($raw_simple_data['transactions'] as $key => $raw_transaction){
+
+			$dt = new DateTime($this->time($raw_transaction['times']['when_recorded']));
+
 			$transactions[$key]['id'] = $raw_transaction['uuid'];
 			$transactions[$key]['date'] = $this->time($raw_transaction['times']['when_recorded']);
 			$transactions[$key]['last_modified'] = $this->time($raw_transaction['times']['last_modified']);
@@ -46,7 +51,11 @@ class upload extends database {
 			$transactions[$key]['transaction_type'] = $raw_transaction['bookkeeping_type'];
 			$transactions[$key]['amount'] = $this->dollar($raw_transaction['amounts']['amount']);
 			$transactions[$key]['running_balance'] = $this->dollar($raw_transaction['running_balance']);
+			$transactions[$key]['budget_id'] = 0;
+			$transactions[$key]['budget_month'] = date_format($dt, 'm');
+			$transactions[$key]['budget_year'] = date_format($dt, 'Y');
 		}
+		//var_dump($transactions); die();
 		return $transactions;
 	}
 

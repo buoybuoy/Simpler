@@ -17,7 +17,7 @@
 			$transaction_class = 'positive';
 		}
 
-		if ($transaction['budget_id'] != null){
+		if ($transaction['budget_id'] != 0){
 			$label = '<span class="label label-default">' . $view->budget[$budget_id]['category'] . '</span>';
 		}
 
@@ -28,7 +28,14 @@
 				<?php echo $date; ?>
 			</td>
 			<td>
-				<a href="#" data-toggle="modal" data-target="#transactionModal" data-transaction="<?php echo $id; ?>" data-category="<?php echo $budget_id; ?>">
+				<a href="#" 
+					data-toggle="modal" 
+					data-target="#transactionModal" 
+					data-transactionid="<?php echo $id; ?>"  
+					data-category="<?php echo $budget_id; ?>" 
+					data-description="<?php echo $description; ?>" 
+					data-amount="<?php echo $amount; ?>" 
+				>
 					<?php echo $description . ' ' . $label; ?>
 				</a>
 			</td>

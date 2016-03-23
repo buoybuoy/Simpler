@@ -1,8 +1,34 @@
 right sidebar
 	zero date
-	spending stats?
+	'uncategorized' section
+	total budgeted/spent
 
-pages
-	budget categories
-	rules
-		rule based on raw description or category
+transaction modal
+	make all one form
+		radio button for move transaction
+	make current category 'selected' on select box
+	make recommended category
+
+budget modal
+	make all one form
+		checkbox to include unused categories
+		auto populate unused category amount with last month's budgeted amount
+	delete category
+
+	suggested categories (if transactions trigger rule but category hasn't been included)
+
+create rule based on transaction
+	new table (category triggers)
+		id
+		trigger_type
+			'raw_description'
+			'description'
+			'category'
+			'category_type'
+		trigger (what's evaluated)
+		budget_categories_id
+
+	updates all transactions after rule creation and after upload
+		foreach transaction
+			if (budget_id = 0 && budgeted_amounts(month & year) has category id of rule
+				update transaction budget_id = budget_id where category_id = rule['category_id']
