@@ -1,5 +1,10 @@
 <?php
 
+/**
+* The controller is the heart of the application. Functionality is based solely around the given month and year, 
+* setting the base for what information to get and what information to set
+*/
+
 class controller extends database {
 
 	public $dt;
@@ -27,19 +32,6 @@ class controller extends database {
 		$this->transactions = $this->select('*','transactions', "WHERE (MONTH(date) = $this->month AND YEAR(date) = $this->year) OR (budget_month = $this->month AND budget_year = $this->year) ORDER BY `date` DESC");
 		$this->total_cash_flow();
 		$this->balance_budget();
-
-		// var_dump($this->all_categories); die();
-	}
-
-	function total_cash_flow(){
-		foreach ($this->transactions as $transaction){
-			if ($transaction['transaction_type'] == 'debit'){
-				$this->total_debit = $this->total_debit + $transaction['amount'];
-			} else {
-				$this->total_credit = $this->total_credit + $transaction['amount'];
-			}
-		}
-		$this->total_diff = $this->total_credit - $this->total_debit;
 	}
 
 	function set_date($get){
@@ -80,6 +72,33 @@ class controller extends database {
 		}
 	}
 
+	function balance_budget(){
+		foreach($this->transactions as $transaction){
+			if (isset($transaction['budget_id'])){
+				if ($transaction['transaction_type'] == 'debit'){
+					$this->budget[$transaction['budget_id']]['spent'] += $transaction['amount'];
+				} else {
+					$this->budget[$transaction['budget_id']]['spent'] -= $transaction['amount'];
+				}
+			}
+		}
+		foreach($this->budget as $key => $budget){
+			$remaining = $budget['limit'] - $budget['spent'];
+			$this->budget[$key]['remaining'] = $remaining;
+		}
+	}
+
+	function total_cash_flow(){
+		foreach ($this->transactions as $transaction){
+			if ($transaction['transaction_type'] == 'debit'){
+				$this->total_debit = $this->total_debit + $transaction['amount'];
+			} else {
+				$this->total_credit = $this->total_credit + $transaction['amount'];
+			}
+		}
+		$this->total_diff = $this->total_credit - $this->total_debit;
+	}
+
 	function set_all_categories(){
 		$categories = $this->select('*','categories', null);
 		$this->all_categories = array();
@@ -106,6 +125,8 @@ class controller extends database {
 	    $this->raw_statement($sql);
 	}
 
+// fix this spaghetti piece of shit function
+
 	function update_transaction($post){
 		$table = 'transactions';
 		extract($post);
@@ -124,26 +145,12 @@ class controller extends database {
 				$budget_month = $_dt->format('m');
 				$budget_year = $_dt->format('Y');
 				$sql = "UPDATE {$table} SET `budget_id`=NULL, `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
-			}
-	    	$sql = "UPDATE {$table} SET `budget_id`='$budget_id', `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
+			} else {
+	    		$sql = "UPDATE {$table} SET `budget_id`='$budget_id', `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
+	    	}
 		}
+		var_dump($sql); die();
 	    $this->raw_statement($sql);
-	}
-
-	function balance_budget(){
-		foreach($this->transactions as $transaction){
-			if (isset($transaction['budget_id'])){
-				if ($transaction['transaction_type'] == 'debit'){
-					$this->budget[$transaction['budget_id']]['spent'] += $transaction['amount'];
-				} else {
-					$this->budget[$transaction['budget_id']]['spent'] -= $transaction['amount'];
-				}
-			}
-		}
-		foreach($this->budget as $key => $budget){
-			$remaining = $budget['limit'] - $budget['spent'];
-			$this->budget[$key]['remaining'] = $remaining;
-		}
 	}
 
 }

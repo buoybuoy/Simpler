@@ -39,7 +39,7 @@
 							<td>
 								<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
 									<input type="hidden" name="action" value="update_transaction">
-									<input type="hidden" name="id" value="<?php echo $key; ?>">
+									<input type="hidden" name="id" value="placeholder">
 									<input type="hidden" name="budget_month" value="prev">
 									<input type="hidden" name="budget_year" value="<?php echo $view->year; ?>">
 									<button type="submit" class="btn btn-default">Previous Month</button>
@@ -48,7 +48,7 @@
 							<td>
 								<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
 									<input type="hidden" name="action" value="update_transaction">
-									<input type="hidden" name="id" value="<?php echo $key; ?>">
+									<input type="hidden" name="id" value="placeholder">
 									<input type="hidden" name="budget_month" value="next">
 									<input type="hidden" name="budget_year" value="<?php echo $view->year; ?>">
 									<button type="submit" class="btn btn-default">Next Month</button>
