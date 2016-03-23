@@ -109,11 +109,24 @@ class controller extends database {
 	function update_transaction($post){
 		$table = 'transactions';
 		extract($post);
-		if ($budget_id == 'uncategorized'){
+		$_dt = $this->dt;
+
+		if (isset($budget_id) && $budget_id == 'uncategorized'){
 			$sql = "UPDATE {$table} SET `budget_id`=NULL, `budget_month`=NULL, `budget_year`=NULL WHERE `id`='$id'";
 		} else {
+			if ($budget_month == 'next' OR $budget_month == 'prev'){
+				if ($budget_month == 'next'){
+					$offset = 1;
+				} elseif ($budget_month == 'prev'){
+					$offset = -1;
+				}
+				$_dt->modify('first day of' . $offset . ' month');
+				$budget_month = $_dt->format('m');
+				$budget_year = $_dt->format('Y');
+				$sql = "UPDATE {$table} SET `budget_id`=NULL, `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
+			}
 	    	$sql = "UPDATE {$table} SET `budget_id`='$budget_id', `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
-	    }
+		}
 	    $this->raw_statement($sql);
 	}
 

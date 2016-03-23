@@ -9,7 +9,7 @@
 				<table class="table">
 					<thead>
 						<th>Edit Existing Categories</th>
-					<thead>
+					</thead>
 					<tbody>
 					<?php foreach ($view->budget as $key => $category){ ?>
 						<tr>
@@ -28,7 +28,7 @@
 					<?php } ?>
 					<thead>
 						<th>Add New Budget Category</th>
-					<thead>
+					</thead>
 					<?php foreach ($view->unused_categories as $key => $unused_category){ ?>
 						<tr>
 							<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
