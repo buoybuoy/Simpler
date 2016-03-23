@@ -4,8 +4,6 @@ right sidebar
 	total budgeted/spent
 
 transaction modal
-	make all one form
-		radio button for move transaction
 	make current category 'selected' on select box
 	make recommended category
 

@@ -144,6 +144,10 @@ class controller extends database {
 		    $sql = "UPDATE {$table} SET `budget_id`='$budget_id', `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
 		    $this->raw_statement($sql);
 		}
+
+		if (isset($create_rule) && $create_rule == true){
+			
+		}
 	}
 
 	// expects keyed array with 'trigger_type', 'trigger', 'budget_categories_id'

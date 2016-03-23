@@ -129,6 +129,9 @@ nav {
 .negative {
   color: #e96e57; }
 
+.margin-top {
+  margin-top: 25px; }
+
 .right-aside {
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
@@ -148,5 +151,27 @@ nav {
 
 .modal-backdrop {
   background-color: #172f3a; }
+
+.modal-header {
+  background-color: #346b83;
+  color: #fff; }
+  .modal-header .close {
+    color: #fff; }
+
+.inline-form-element {
+  float: none !important;
+  width: auto !important;
+  display: inline !important; }
+
+.checkbox {
+  display: inline-block;
+  margin-right: 8px !important; }
+
+.btn-primary {
+  background-color: #346b83; }
+
+.btn-primary:hover {
+  background-color: #346b83;
+  opacity: .8; }
 
 /*# sourceMappingURL=style.css.map */

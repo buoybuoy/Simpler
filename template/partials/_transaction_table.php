@@ -4,20 +4,18 @@
 	<?php
 	foreach($view->transactions as $transaction){
 
-		$date = date("M j", strtotime($transaction['date']));
-		$id = $transaction['id'];
-		$budget_id = $transaction['budget_id'];
-		$description = $transaction['description'];
-		$amount = number_format($transaction['amount'], 2, '.', '');
+		extract($transaction);
+		$date = date("M j", strtotime($date));
+		$amount = number_format($amount, 2, '.', '');
 		$label = null;
 
-		if ($transaction['transaction_type'] == "debit"){
+		if ($transaction_type == "debit"){
 			$transaction_class = 'negative';
 		} else {
 			$transaction_class = 'positive';
 		}
 
-		if ($transaction['budget_id'] != 0){
+		if ($budget_id != 0){
 			$label = '<span class="label label-default">' . $view->budget[$budget_id]['category'] . '</span>';
 		}
 
@@ -30,11 +28,15 @@
 			<td>
 				<a href="#" 
 					data-toggle="modal" 
-					data-target="#transactionModal" 
-					data-transactionid="<?php echo $id; ?>"  
-					data-category="<?php echo $budget_id; ?>" 
-					data-description="<?php echo $description; ?>" 
-					data-amount="<?php echo $amount; ?>" 
+					data-target="#transactionModal"
+					data-date="<?php echo $date; ?>" 
+					data-transactionid="<?php echo $id; ?>"
+					data-rawdescription="<?php echo $raw_description; ?>"
+					data-description="<?php echo $description; ?>"
+					data-category="<?php echo $category; ?>"
+					data-categorytype="<?php echo $category_type; ?>"
+					data-budgetid="<?php echo $budget_id; ?>"
+					data-amount="<?php echo $amount; ?>"
 				>
 					<?php echo $description . ' ' . $label; ?>
 				</a>

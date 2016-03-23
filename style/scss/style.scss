@@ -175,6 +175,10 @@ nav{
 	color: $red;
 }
 
+.margin-top{
+	margin-top: 25px;
+}
+
 .right-aside{
 	border-right: 1px solid #ddd;
 	border-left: 1px solid #ddd;
@@ -198,4 +202,32 @@ nav{
 
 .modal-backdrop{
 	background-color: darken($navy, 20%);
+}
+
+.modal-header{
+	background-color: $navy;
+	color: #fff;
+	.close{
+		color: #fff;
+	}
+}
+
+.inline-form-element{
+	float: none !important;
+	width: auto !important;
+	display: inline !important;
+}
+
+.checkbox{
+	display: inline-block;
+	margin-right: 8px !important;
+}
+
+.btn-primary{
+	background-color: $navy;
+}
+
+.btn-primary:hover{
+	background-color: $navy;
+	opacity: .8;
 }

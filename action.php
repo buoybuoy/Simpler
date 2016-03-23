@@ -8,6 +8,8 @@ include('include/view.class.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+	// var_dump($_POST); exit;
+
 	if (isset($_POST['action'])){
 
 		$action = $_POST['action'];
