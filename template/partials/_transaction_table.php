@@ -15,8 +15,8 @@
 			$transaction_class = 'positive';
 		}
 
-		if ($budget_id != 0){
-			$label = '<span class="label label-default">' . $view->budget[$budget_id]['category'] . '</span>';
+		if ($budget_category_id != 0){
+			$label = '<span class="label label-default">' . $view->budgeted_amounts[$budget_category_id]['category_name'] . '</span>';
 		}
 
 		?>
@@ -35,7 +35,7 @@
 					data-description="<?php echo $description; ?>"
 					data-category="<?php echo $category; ?>"
 					data-categorytype="<?php echo $category_type; ?>"
-					data-budgetid="<?php echo $budget_id; ?>"
+					data-budgetcategoryid="<?php echo $budget_category_id; ?>"
 					data-amount="<?php echo $amount; ?>"
 				>
 					<?php echo $description . ' ' . $label; ?>

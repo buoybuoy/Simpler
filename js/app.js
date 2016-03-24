@@ -18,7 +18,7 @@ $('#transactionModal').on('show.bs.modal', function (event) {
     var description = button.data('description')
     var category = button.data('category')
     var categorytype = button.data('categorytype')
-    var budgetid = button.data('budgetid')
+    var budgetcategoryid = button.data('budgetcategoryid')
     var amount = button.data('amount')
 
     var modal = $(this)
@@ -29,7 +29,7 @@ $('#transactionModal').on('show.bs.modal', function (event) {
     modal.find('.description').text(description)
     modal.find('#category').text(category)
     modal.find('#category_type').text(categorytype)
-    modal.find('#budgetid').text(budgetid)
+    modal.find('#budgetcategoryid').text(budgetcategoryid)
     modal.find('#amount').text(amount)
 })
 

@@ -30,8 +30,6 @@ class upload extends database {
 		    `running_balance` = '$running_balance'
 		";
 	    $this->raw_statement($sql);
-
-	    // evaulate rules here (if possible)
 	}
 
 	function format_data($raw_simple_data){
@@ -51,7 +49,10 @@ class upload extends database {
 			$transactions[$key]['transaction_type'] = $raw_transaction['bookkeeping_type'];
 			$transactions[$key]['amount'] = $this->dollar($raw_transaction['amounts']['amount']);
 			$transactions[$key]['running_balance'] = $this->dollar($raw_transaction['running_balance']);
-			$transactions[$key]['budget_id'] = 0;
+
+			// run rules to determine budget_category_id
+
+			$transactions[$key]['budget_category_id'] = 0;
 			$transactions[$key]['budget_month'] = date_format($dt, 'm');
 			$transactions[$key]['budget_year'] = date_format($dt, 'Y');
 		}

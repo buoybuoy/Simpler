@@ -1,3 +1,6 @@
+budget income
+	separate from spending categories
+
 right sidebar
 	zero date
 	'uncategorized' section
@@ -5,7 +8,6 @@ right sidebar
 
 transaction modal
 	make current category 'selected' on select box
-	make recommended category
 
 budget modal
 	make all one form

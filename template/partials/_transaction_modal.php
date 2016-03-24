@@ -25,10 +25,9 @@
 					<div class="row">
 						<div class="col-xs-5">
 							<fieldset class="form-group">
-								<select class="form-control" id="budget_categories" name="budget_id">
-									<option value="0">Uncategorized</option>
-									<?php foreach($view->budget as $id => $budget) {
-										echo '<option value="' . $id . '">' . $budget['category'] . '</option>';
+								<select class="form-control" id="budget_categories" name="budget_category_id">
+									<?php foreach($view->budgeted_amounts as $id => $budgeted_amount) {
+										echo '<option value="' . $id . '">' . $budgeted_amount['category_name'] . '</option>';
 									} ?>
 								</select>
 							</fieldset>

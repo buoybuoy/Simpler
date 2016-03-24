@@ -12,7 +12,7 @@ class controller extends database {
 	public $month;
 
 	public $transactions;
-	public $budget;
+	public $budgeted_amounts;
 
 	public $all_categories;
 	public $unused_categories;
@@ -54,37 +54,57 @@ class controller extends database {
 		}
 	}
 
+	function set_all_categories(){
+		$categories = $this->select('*','budget_categories', null);
+		$this->all_categories = array();
+		foreach ($categories as $category){
+			$this->all_categories[$category['id']] = $category['name'];
+		}
+		$this->unused_categories = $this->all_categories;
+	}
+
 	function set_budget(){
-		$this->budget = array();
-		$budgeted_amounts = $this->select('*','budgeted_amounts', "WHERE `month`=$this->month AND `year`=$this->year ORDER BY `amount` DESC");
-		foreach ($budgeted_amounts as $budgeted_amount){
-			$budget_id = $budgeted_amount['id'];
-			$this->budget[$budget_id] = array(
+		$this->budgeted_amounts = array();
+		$raw_budgeted_amounts = $this->select('*','budgeted_amounts', "WHERE `month`=$this->month AND `year`=$this->year ORDER BY `amount` DESC");
+		foreach ($raw_budgeted_amounts as $budgeted_amount){
+			$_id = $budgeted_amount['category_id'];
+			$this->budgeted_amounts[$_id] = array(
+				'category_name'	=> 		$this->all_categories[$_id],
 				'month' 		=> 		$budgeted_amount['month'],
 				'year' 			=> 		$budgeted_amount['year'],
-				'category_id' 	=> 		$budgeted_amount['category_id'],
-				'category' 		=> 		$this->all_categories[$budgeted_amount['category_id']],
 				'limit'			=> 		$budgeted_amount['amount'],
 				'spent'			=> 		0,
 				'remaining'		=> 		$budgeted_amount['amount']
 			);
-			unset($this->unused_categories[$budgeted_amount['category_id']]);
+			unset($this->unused_categories[$_id]);
 		}
+		unset($this->budgeted_amounts[0]);
+		$this->budgeted_amounts[0] = array(
+			'category_name'	=> 		'uncategorized',
+			'month' 		=> 		$this->month,
+			'year' 			=> 		$this->year,
+			'limit'			=> 		0,
+			'spent'			=> 		0,
+			'remaining'		=> 		0
+		);
+		unset($this->unused_categories[0]);
 	}
 
 	function balance_budget(){
-		foreach($this->transactions as $transaction){
-			if (isset($transaction['budget_id']) && $transaction['budget_id'] != 0){
-				if ($transaction['transaction_type'] == 'debit'){
-					$this->budget[$transaction['budget_id']]['spent'] += $transaction['amount'];
-				} else {
-					$this->budget[$transaction['budget_id']]['spent'] -= $transaction['amount'];
-				}
+		foreach($this->transactions as $key => $transaction){
+			if (!array_key_exists($transaction['budget_category_id'], $this->budgeted_amounts)){
+				$this->transactions[$key]['budget_category_id'] = 0; 
 			}
 		}
-		foreach($this->budget as $key => $budget){
+		foreach($this->transactions as $key => $transaction){
+			extract($transaction);
+			if ($transaction_type == 'debit'){
+				$this->budgeted_amounts[$budget_category_id]['spent'] += $amount;
+			}
+		}
+		foreach($this->budgeted_amounts as $key => $budget){
 			$remaining = $budget['limit'] - $budget['spent'];
-			$this->budget[$key]['remaining'] = $remaining;
+			$this->budgeted_amounts[$key]['remaining'] = $remaining;
 		}
 	}
 
@@ -97,15 +117,6 @@ class controller extends database {
 			}
 		}
 		$this->total_diff = $this->total_credit - $this->total_debit;
-	}
-
-	function set_all_categories(){
-		$categories = $this->select('*','budget_categories', null);
-		$this->all_categories = array();
-		foreach ($categories as $category){
-			$this->all_categories[$category['id']] = $category['name'];
-		}
-		$this->unused_categories = $this->all_categories;
 	}
 
 	function add_category($name){
@@ -129,19 +140,19 @@ class controller extends database {
 		extract($post);
 		$_dt = $this->dt;
 
-		if (isset($budget_id)){
+		if (isset($budget_category_id)){
 			if ($budget_month == 'next' OR $budget_month == 'prev'){
 				if ($budget_month == 'next'){
 					$offset = 1;
 				} elseif ($budget_month == 'prev'){
 					$offset = -1;
 				}
-				$budget_id = 0;
+
 				$_dt->modify('first day of' . $offset . ' month');
 				$budget_month = $_dt->format('m');
 				$budget_year = $_dt->format('Y');
 			}
-		    $sql = "UPDATE {$table} SET `budget_id`='$budget_id', `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
+		    $sql = "UPDATE {$table} SET `budget_category_id`='$budget_category_id', `budget_month`=$budget_month, `budget_year`=$budget_year WHERE `id`='$id'";
 		    $this->raw_statement($sql);
 		}
 

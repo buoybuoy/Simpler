@@ -11,7 +11,7 @@
 						<th>Edit Existing Categories</th>
 					</thead>
 					<tbody>
-					<?php foreach ($view->budget as $key => $category){ ?>
+					<?php foreach ($view->budgeted_amounts as $key => $category){ ?>
 						<tr>
 							<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
 								<!-- <div class="form-group"> -->
@@ -19,7 +19,7 @@
 									<input type="hidden" name="id" value="<?php echo $key; ?>">
 									<input type="hidden" name="month" value="<?php echo $view->month; ?>">
 									<input type="hidden" name="year" value="<?php echo $view->year; ?>">
-									<td><?php echo $category['category'] ?></td>
+									<td><?php echo $category['category_name'] ?></td>
 									<td><input type="text" class="form-control table-input" id="amount" value="<?php echo $category['limit']; ?>" name="amount"></td>
 								<!-- </div> -->
 								<td><button type="submit" class="btn btn-default">Change</button></td>
