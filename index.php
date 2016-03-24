@@ -6,8 +6,6 @@ include('include/controller.class.php');
 include('include/validation.class.php');
 include('include/view.class.php');
 
-
-
 include('template/partials/_dochead.php');
 include('template/partials/_nav.php');
 include('template/partials/_titlebar.php');

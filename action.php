@@ -17,22 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		$validate->escape($_POST);
 
-		if ($action == 'add_to_budget') {
-
-			// move to handle logic in budget controller
-			if ($_POST['category_id'] == 'new'){
-				$view->add_category($_POST['category_name']);
-				$name = $_POST["category_name"];
-				$new_category = $view->select('*', 'budget_categories', "ORDER BY `id` DESC LIMIT 1");
-				$_POST['category_id'] = $new_category[0]['id'];
-				unset($_POST['category_name']);
-			}
-
-			// handle transaction classifying rules here
-
-			$view->update_budget($_POST);
-
-		} elseif ($action == 'update_amount'){
+		if ($action == 'update_budget'){
 
 			$view->update_budget($_POST);
 

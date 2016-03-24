@@ -5,64 +5,42 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="description"><?php echo $view->title; ?></h4>
 			</div>
-			<div class="modal-body">
-				<table class="table">
-					<thead>
-						<th>Edit Existing Categories</th>
-					</thead>
-					<tbody>
-					<?php foreach ($view->budgeted_amounts as $key => $category){ ?>
-						<tr>
-							<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
-								<!-- <div class="form-group"> -->
-									<input type="hidden" name="action" value="update_amount">
-									<input type="hidden" name="id" value="<?php echo $key; ?>">
-									<input type="hidden" name="month" value="<?php echo $view->month; ?>">
-									<input type="hidden" name="year" value="<?php echo $view->year; ?>">
-									<td><?php echo $category['category_name'] ?></td>
-									<td><input type="text" class="form-control table-input" id="amount" value="<?php echo $category['limit']; ?>" name="amount"></td>
-								<!-- </div> -->
-								<td><button type="submit" class="btn btn-default">Change</button></td>
-							</form>
-						</tr>
-					<?php } ?>
-					<thead>
-						<th>Add New Budget Category</th>
-					</thead>
-					<?php foreach ($view->unused_categories as $key => $unused_category){ ?>
-						<tr>
-							<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
-								<!-- <div class="form-group"> -->
-									<input type="hidden" name="action" value="add_to_budget">
-									<input type="hidden" name="category_id" value="<?php echo $key; ?>">
-									<input type="hidden" name="month" value="<?php echo $view->month; ?>">
-									<input type="hidden" name="year" value="<?php echo $view->year; ?>">
-									<td><?php echo $unused_category ?></td>
-									<td><input type="text" class="form-control table-input" id="amount" placeholder="Amount" name="amount"></td>
-								<!-- </div> -->
-								<td><button type="submit" class="btn btn-default">Add</button></td>
-							</form>
-						</tr>
-					<?php } ?>
-						<tr>
-							<form class="form-inline" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
-								<!-- <div class="form-group"> -->
-									<input type="hidden" name="action" value="add_to_budget">
-									<input type="hidden" name="category_id" value="new">
-									<input type="hidden" name="month" value="<?php echo $view->month; ?>">
-									<input type="hidden" name="year" value="<?php echo $view->year; ?>">
-									<td><input type="text" class="form-control" placeholder="New Category" name="category_name"></td>
-									<td><input type="text" class="form-control table-input" id="amount" placeholder="Amount" name="amount"></td>
-								<!-- </div> -->
-								<td><button type="submit" class="btn btn-default">Add</button></td>
-							</form>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-			</div>
+			<form class="form" action="<?php echo $view->action_page; ?>" method="post" autocomplete="off">
+				<input type="hidden" name="action" value="update_budget">
+				<div class="modal-body">
+					<table class="table">
+						<tbody>
+							<?php if(count($view->budgeted_amounts) > 1){ ?>
+								<thead>
+									<th>Edit Existing Categories</th>
+								</thead>
+								<?php foreach ($view->budgeted_amounts as $key => $category){ if($key != 0){?>
+									<tr>
+										<td><?php echo $category['category_name'] ?></td>
+										<td><input type="text" class="form-control table-input" value="<?php echo $category['limit']; ?>" name="<?php echo $key; ?>"></td>
+									</tr>
+							<?php }}} ?>
+								<thead>
+									<th>Add New Budget Category</th>
+								</thead>
+								<?php foreach ($view->unused_categories as $key => $category){ ?>
+									<tr>
+										<td><?php echo $category ?></td>
+										<td><input type="text" class="form-control table-input" placeholder="Amount" name="<?php echo $key; ?>"></td>
+									</tr>
+								<?php } ?>
+								<tr>
+									<td><input type="text" class="form-control table-input" placeholder="New Category" name="new_category_name"></td>
+									<td><input type="text" class="form-control table-input" placeholder="Amount" name="new_category_amount"></td>
+								</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn btn-default">Save</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>

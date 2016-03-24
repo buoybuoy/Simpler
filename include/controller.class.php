@@ -69,23 +69,25 @@ class controller extends database {
 		foreach ($raw_budgeted_amounts as $budgeted_amount){
 			$_id = $budgeted_amount['category_id'];
 			$this->budgeted_amounts[$_id] = array(
-				'category_name'	=> 		$this->all_categories[$_id],
-				'month' 		=> 		$budgeted_amount['month'],
-				'year' 			=> 		$budgeted_amount['year'],
-				'limit'			=> 		$budgeted_amount['amount'],
-				'spent'			=> 		0,
-				'remaining'		=> 		$budgeted_amount['amount']
+				'category_name'			=> 	$this->all_categories[$_id],
+				'budgeted_amount_id'	=>	$budgeted_amount['id'],
+				'month' 				=> 	$budgeted_amount['month'],
+				'year' 					=> 	$budgeted_amount['year'],
+				'limit'					=> 	$budgeted_amount['amount'],
+				'spent'					=> 	0,
+				'remaining'				=> 	$budgeted_amount['amount']
 			);
 			unset($this->unused_categories[$_id]);
 		}
 		unset($this->budgeted_amounts[0]);
 		$this->budgeted_amounts[0] = array(
-			'category_name'	=> 		'uncategorized',
-			'month' 		=> 		$this->month,
-			'year' 			=> 		$this->year,
-			'limit'			=> 		0,
-			'spent'			=> 		0,
-			'remaining'		=> 		0
+			'category_name'			=> 	'uncategorized',
+			'budgeted_amount_id'	=>	0,
+			'month' 				=> 	$this->month,
+			'year' 					=> 	$this->year,
+			'limit'					=> 	0,
+			'spent'					=> 	0,
+			'remaining'				=> 	0
 		);
 		unset($this->unused_categories[0]);
 	}
@@ -125,13 +127,40 @@ class controller extends database {
 	}
 
 	function update_budget($post){
+
+		if(!empty($post['new_category_name']) && !empty($post['new_category_amount'])){
+			$name = $post['new_category_name'];
+			$amount = $post['new_category_amount']; 	
+			$this->add_category($name);
+			$new_category = $this->select('*', 'budget_categories', "ORDER BY `id` DESC LIMIT 1");
+			$post[ $new_category[0]['id'] ] = $amount;
+		}
+		unset($post['new_category_name']);
+		unset($post['new_category_amount']);
+
+		foreach($post as $category_id => $amount){
+			$new_entry = array(
+				'category_id' => $category_id,
+				'amount' => $amount,
+				'month' => $this->month,
+				'year' => $this->year
+			);
+			$existing_amount = $this->select('*', 'budgeted_amounts', "WHERE `category_id` = $category_id AND `month` = $this->month AND `year` = $this->year LIMIT 1");
+			if (!empty($existing_amount[0])){
+				$new_entry['id'] = $existing_amount[0]['id'];
+			}
+			$this->update_budgeted_amount($new_entry);
+		}
+	}
+
+	function update_budgeted_amount($post){
 		$table = 'budgeted_amounts';
-		$fields = '`' . implode('`,`', array_keys($post)) . '`';
-		$values = "'" . implode("','", $post) . "'";
 		extract($post);
-	    $sql = "INSERT INTO {$table} ($fields) VALUES($values) ON DUPLICATE KEY UPDATE
-		    `amount` = '$amount'
-		";
+		if (isset($id)){
+			$sql = "UPDATE $table SET `amount` = $amount WHERE `id` = $id LIMIT 1";
+		} else{
+			$sql = "INSERT INTO {$table} (`category_id`, `amount`, `month`, `year`) VALUES('$category_id', '$amount', '$month', '$year')";
+		}
 	    $this->raw_statement($sql);
 	}
 
