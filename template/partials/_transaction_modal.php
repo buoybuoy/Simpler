@@ -50,9 +50,9 @@
 					<div class="row margin-top">
 						<div class="col-xs-12">
 							<div class="input-group">
-								<input class="checkbox" type="checkbox" aria-label="..." name="create_rule" value="true">
+								<input class="checkbox" type="checkbox" aria-label="..." name="create_trigger" value="true">
 								Always categorize
-								<select class="form-control inline-form-element" id="select_rule" name="rule">
+								<select class="form-control inline-form-element" id="select_trigger" name="trigger_type">
 									<option value="description" class="description" selected>Placeholder</option>
 									<option value="raw_description" id="raw_description">Placeholder</option>
 									<option value="category" id="category">Placeholder</option>

@@ -17,18 +17,13 @@ if ($view->page == 'activity'){ ?>
 	</h3>
 	<table class="table">
 	<tbody>
-	<tr class="table-header">
-		<td>Category</td>
-		<td>Spent</td>
-		<td>Remaining</td>
-	</tr>
 	<?php foreach ($view->budgeted_amounts as $key => $budgeted_amount){
 		if ($key == 0){
 			echo '<tr class="small">';
 			echo '<td><i>' . $budgeted_amount['category_name'] . '</i></td><td><i>$' . $budgeted_amount['spent'] . '</i></td><td></td>';
 		} else {
 			echo '<tr>';
-			echo '<td>' . $budgeted_amount['category_name'] . '</td><td>$' . $budgeted_amount['spent'] . '</td><td>$' . $budgeted_amount['remaining'] . '</td>';
+			echo '<td>' . $budgeted_amount['category_name'] . '</td><td>$' . $budgeted_amount['spent'] . ' spent</td><td>$' . $budgeted_amount['remaining'] . ' left</td>';
 		}
 		echo '</tr>';
 	} ?>

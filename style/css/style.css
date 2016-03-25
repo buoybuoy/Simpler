@@ -174,4 +174,10 @@ nav {
   background-color: #346b83;
   opacity: .8; }
 
+input, input:focus, label, label:focus, label:before {
+  box-shadow: none !important; }
+
+.checkbox-danger input[type=checkbox] {
+  margin-left: 0 !important; }
+
 /*# sourceMappingURL=style.css.map */
