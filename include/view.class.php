@@ -1,5 +1,7 @@
 <?php
 
+require_once('controller.class.php');
+
 class view extends controller {
 
 	public $title;

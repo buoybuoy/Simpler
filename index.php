@@ -1,9 +1,6 @@
 <?php
-
-include('include/config.class.php');
-include('include/database.class.php');
-include('include/controller.class.php');
-include('include/validation.class.php');
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 include('include/view.class.php');
 
 include('template/partials/_dochead.php');

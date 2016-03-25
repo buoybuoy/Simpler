@@ -1,5 +1,7 @@
 <?php
 
+require_once('config.class.php');
+
 class database {
 
 	protected $db;

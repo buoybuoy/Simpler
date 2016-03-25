@@ -1,33 +1,24 @@
-<?php 
+<?php
 
-include('include/config.class.php');
-include('include/database.class.php');
-include('include/controller.class.php');
+$dump = false;
+$redirect = true;
+
 include('include/validation.class.php');
-include('include/view.class.php');
+include('include/action.class.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-	// var_dump($_POST); exit;
+	// debug
+	if ($dump == true){ var_dump($_POST); exit; }
 
-	if (isset($_POST['action'])){
+	$_POST = $validate->escape($_POST);
 
-		$action = $_POST['action'];
-		unset($_POST['action']);
+	$action = new action($_POST, $_GET);
 
-		$validate->escape($_POST);
-
-		if ($action == 'update_budget'){
-
-			$view->update_budget($_POST);
-
-		} elseif ($action == 'update_transaction'){
-
-			$view->update_transaction($_POST);
-
-		}
-	}
 }
 
-$referer = $config->base_url . '?' . $_SERVER['QUERY_STRING'];
-header('Location:' . $referer);
+// debug
+if ($redirect == true){
+	$referer = $config->base_url . '?' . $_SERVER['QUERY_STRING'];
+	header('Location:' . $referer);
+}

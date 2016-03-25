@@ -1,5 +1,7 @@
 <?php
 
+require_once('database.class.php');
+
 class upload extends database {
 
 	function dollar($amount){

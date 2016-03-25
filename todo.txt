@@ -9,10 +9,9 @@ transaction modal
 	make current category 'selected' on select box
 
 budget modal
-	make all one form
-		checkbox to include unused categories
-		auto populate unused category amount with last month's budgeted amount
 	delete category
+	set to 0 to remove from budgeted amounts
+	rename category?
 
 budget table
 	split based on budget categories

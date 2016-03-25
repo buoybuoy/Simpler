@@ -1,7 +1,5 @@
 <?php
 
-include('../include/config.class.php');
-include('../include/database.class.php');
 include('../include/upload.class.php');
 
 $filename = 'test_3-20-16.json';
