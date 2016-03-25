@@ -7,10 +7,12 @@ class view extends controller {
 	public $page;
 	public $title;
 	public $action_page;
+	public $ajax;
 
 	function __construct($get){
 		parent::__construct($get);
 		$this->set_page($get);
+		$this->set_ajax($get);
 		$this->title = $this->dt->format('F Y');
 		$this->action_page = 'action.php?' . $_SERVER['QUERY_STRING'];
 		$this->load_template();
@@ -21,6 +23,14 @@ class view extends controller {
 			$this->page = $get['p'];
 		} else {
 			$this->page = 'activity';
+		}
+	}
+
+	function set_ajax($get){
+		if (isset($get['ajax']) AND $get['ajax'] == true){
+			$this->ajax = true;
+		} else {
+			$this->ajax = false;
 		}
 	}
 
@@ -76,11 +86,15 @@ class view extends controller {
 		}
 	}
 
-	function load_partial($name){
+	function load_partial($name, $load_on_ajax){
 		global $config;
 		$partial = $config->root_dir . 'template/partials/_' . $name . '.php';
 		if (file_exists($partial)){
-			require($partial);
+			if ($this->ajax == false){
+				require($partial);
+			} elseif ($load_on_ajax == true){
+				require($partial);
+			}
 		}
 	}
 

@@ -24,9 +24,10 @@
 									<th>Add New Budget Category</th>
 								</thead>
 								<?php foreach ($this->unused_categories as $key => $category){ ?>
-									<tr>
+									<tr id="<?php echo $key; ?>">
 										<td><?php echo $category ?></td>
 										<td><input type="text" class="form-control table-input" placeholder="Amount" name="<?php echo $key; ?>"></td>
+										<td><a href="#" class="btn btn-danger delete-category" data-budgetcategoryid="<?php echo $key; ?>" data-url="<?php echo $this->action_page; ?>"><i class="fa fa-close"></i></a></td>
 									</tr>
 								<?php } ?>
 								<tr>

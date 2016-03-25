@@ -180,4 +180,7 @@ input, input:focus, label, label:focus, label:before {
 .checkbox-danger input[type=checkbox] {
   margin-left: 0 !important; }
 
+#response {
+  display: none; }
+
 /*# sourceMappingURL=style.css.map */

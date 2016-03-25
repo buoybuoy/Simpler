@@ -1,13 +1,3 @@
-// $('#transactionModal').on('show.bs.modal', function (event) {
-//   var button = $(event.relatedTarget) // Button that triggered the modal
-//   var recipient = button.data('whatever') // Extract info from data-* attributes
-//   // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-//   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-//   var modal = $(this)
-//   modal.find('.modal-title').text('New message to ' + recipient)
-//   modal.find('.modal-body input').val(recipient)
-// })
-
 $('#transactionModal').on('show.bs.modal', function (event) {
 
     var button = $(event.relatedTarget) // Button that triggered the modal
@@ -36,4 +26,67 @@ $('#transactionModal').on('show.bs.modal', function (event) {
 $('#budgetModal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget) // Button that triggered the modal
   var modal = $(this)
+})
+
+$('#transactionForm').append(
+    '<input type="hidden" name="ajax" value="true">'
+);
+
+$('#transactionForm').submit(function(e){
+    e.preventDefault();
+    var $form = $(this);
+    $.ajax({
+        async    : true,
+        type     : "POST",
+        cache    : false,
+        url      : $form.attr('action'),
+        data     : $form.serializeArray(),
+        success  : function(data) {
+            replaceWithResponse( data );
+        }
+    });
+    
+    // var $modal = $form.data('modal');
+    // $($modal).modal('toggle');
+    // console.log($modal);
+});
+
+function ajaxRequest(url, sendData){
+    var result = $.post( url, sendData, function(){
+        console.log('sent');
+    })
+    .done(function(data){
+        replaceWithResponse( data );
+    })
+    .fail(function(data){
+        console.log('failed');
+        console.log(data);
+    });
+}
+var $transactionTable = $('#transactionTable');
+var $rightAside = $('#rightAside');
+
+function replaceWithResponse( data ){
+    $('#responseContainer').append( data );
+    var newTable = $('#responseContainer #transactionTable');
+    var newAside = $('#responseContainer #rightAside');
+    $transactionTable.html(newTable.html());
+    $rightAside.html(newAside.html());
+    $('#responseContainer').empty();
+}
+
+$('.delete-category').on('click', function(e){
+    e.preventDefault();
+    var button = $(this);
+    var budgetcategoryid = button.data('budgetcategoryid');
+    var deleteRow = '#' + budgetcategoryid;
+    var data = {
+        action: "delete_category",
+        budget_category_id: budgetcategoryid,
+        ajax: true
+    }
+    var url = '/simpler/' + button.data('url');
+    
+    ajaxRequest(url, data);
+    $(deleteRow).remove();
 })

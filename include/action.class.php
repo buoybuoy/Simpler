@@ -5,17 +5,26 @@ require_once('controller.class.php');
 class action extends controller {
 
 	protected $post;
+	protected $referer;
+	protected $ajax;
 
-	function __construct($post, $get){
+	function __construct($post, $get, $referer){
 		parent::__construct($get);
+		$this->referer = $referer;
 		$this->action($post);
 		$this->set_all_categories();
 		$this->clean_database();
+		$this->redirect();
 	}
 
 	function action($post){
+		global $validate;
+		$this->post = $validate->escape($post);
+		if (isset($post['ajax'])){
+			$this->ajax = $post['ajax'];
+			unset($post['ajax']);
+		}
 		if (isset($post['action'])){
-			$this->post = $post;
 			$action = $this->post['action'];
 			unset($this->post['action']);
 			if ($action == 'update_budget'){
@@ -26,6 +35,10 @@ class action extends controller {
 				$this->delete_category();
 			}
 		}
+	}
+
+	function redirect($referer){
+		header('Location:' . $this->referer . '&ajax=true');
 	}
 
 	function update_budget(){
@@ -70,6 +83,7 @@ class action extends controller {
 	function delete_category(){
 		$id = $this->post['budget_category_id'];
 		$sql = "DELETE FROM budget_categories WHERE `id` = $id";
+		$this->raw_statement($sql);
 	}
 
 	function update_transaction(){
