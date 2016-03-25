@@ -3,7 +3,6 @@ budget income
 
 right sidebar
 	zero date
-	'uncategorized' section
 	total budgeted/spent
 
 transaction modal
@@ -15,20 +14,6 @@ budget modal
 		auto populate unused category amount with last month's budgeted amount
 	delete category
 
-	suggested categories (if transactions trigger rule but category hasn't been included)
+budget table
+	split based on budget categories
 
-create rule based on transaction
-	new table (category triggers)
-		id
-		trigger_type
-			'raw_description'
-			'description'
-			'category'
-			'category_type'
-		trigger (what's evaluated)
-		budget_categories_id
-
-	updates all transactions after rule creation and after upload
-		foreach transaction
-			if (budget_id = 0 && budgeted_amounts(month & year) has category id of rule
-				update transaction budget_id = budget_id where category_id = rule['category_id']
