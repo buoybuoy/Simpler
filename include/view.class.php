@@ -4,14 +4,24 @@ require_once('controller.class.php');
 
 class view extends controller {
 
+	public $page;
 	public $title;
-
 	public $action_page;
 
 	function __construct($get){
 		parent::__construct($get);
+		$this->set_page($get);
 		$this->title = $this->dt->format('F Y');
 		$this->action_page = 'action.php?' . $_SERVER['QUERY_STRING'];
+		$this->load_template();
+	}
+
+	function set_page($get){
+		if (isset($get['p'])){
+			$this->page = $get['p'];
+		} else {
+			$this->page = 'activity';
+		}
 	}
 
 	function link_relative_month($offset){
@@ -54,6 +64,24 @@ class view extends controller {
 		global $config;
 		$link_location = $config->base_url . '?m=' . $this->month . '&y=' . $this->year . '&p=' . $page;
 		return $link_location;
+	}
+
+	function load_template(){
+		global $config;
+		$template = $config->root_dir . 'template/' . $this->page . '.php';
+		if (file_exists($template)){
+			ob_start();
+			require($template);
+			echo ob_get_clean();
+		}
+	}
+
+	function load_partial($name){
+		global $config;
+		$partial = $config->root_dir . 'template/partials/_' . $name . '.php';
+		if (file_exists($partial)){
+			require($partial);
+		}
 	}
 
 

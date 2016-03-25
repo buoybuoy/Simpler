@@ -14,8 +14,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav nav-left">
-        <li class="<?php echo $view->is_page_active('activity');?>"><a href="<?php echo $view->page_link('activity');?>">Activity</a></li>
-        <li class="<?php echo $view->is_page_active('budget');?>" ><a href="<?php echo $view->page_link('budget');?>">Budget</a></li>
+        <li class="<?php echo $this->is_page_active('activity');?>"><a href="<?php echo $this->page_link('activity');?>">Activity</a></li>
+        <li class="<?php echo $this->is_page_active('budget');?>" ><a href="<?php echo $this->page_link('budget');?>">Budget</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/simpler/upload">Upload</a></li>

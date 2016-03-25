@@ -4,8 +4,6 @@ require_once('database.class.php');
 
 class controller extends database {
 
-	public $page;
-
 	public $dt;
 	public $year;
 	public $month;
@@ -23,7 +21,6 @@ class controller extends database {
 	function __construct($get){
 		parent::__construct();	
 		$this->set_date($get);
-		$this->set_page($get);
 		$this->set_all_categories();
 		$this->set_budget();
 		$this->set_transactions();
@@ -41,14 +38,6 @@ class controller extends database {
 			$this->month = $get['m'];
 		}
 		$this->dt = DateTime::createFromFormat('n Y', $this->month . ' ' . $this->year);
-	}
-
-	function set_page($get){
-		if (isset($get['p'])){
-			$this->page = $get['p'];
-		} else {
-			$this->page = 'activity';
-		}
 	}
 
 	function set_all_categories(){

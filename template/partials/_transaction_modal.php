@@ -5,10 +5,10 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
 				<h4 class="modal-title">Edit Transaction </h4>
 			</div>
-			<form action="<?php echo $view->action_page; ?>" method="post" autocomplete="off" class="form">
+			<form action="<?php echo $this->action_page; ?>" method="post" autocomplete="off" class="form">
 				<input type="hidden" name="action" value="update_transaction">
 				<input type="hidden" name="id" id="transactionId" value="placeholder">
-				<input type="hidden" name="budget_year" value="<?php echo $view->year; ?>">
+				<input type="hidden" name="budget_year" value="<?php echo $this->year; ?>">
 				<div class="modal-body">
 					<table class="table">
 						<tbody>
@@ -26,7 +26,7 @@
 						<div class="col-xs-5">
 							<fieldset class="form-group">
 								<select class="form-control" id="budget_categories" name="budget_category_id">
-									<?php foreach($view->budgeted_amounts as $id => $budgeted_amount) {
+									<?php foreach($this->budgeted_amounts as $id => $budgeted_amount) {
 										echo '<option value="' . $id . '">' . $budgeted_amount['category_name'] . '</option>';
 									} ?>
 								</select>
@@ -38,7 +38,7 @@
 									<input type="radio" name="budget_month" id="inlineRadio2" value="prev"> Last Month
 								</label>
 								<label class="btn btn-default active">
-									<input type="radio" name="budget_month" id="inlineRadio1" value="<?php echo $view->month; ?>" checked> This Month
+									<input type="radio" name="budget_month" id="inlineRadio1" value="<?php echo $this->month; ?>" checked> This Month
 								</label>
 								<label class="btn btn-default">
 									<input type="radio" name="budget_month" id="inlineRadio3" value="next"> Next Month

@@ -2,7 +2,7 @@
 	<tbody>
 
 	<?php
-	foreach($view->transactions as $transaction){
+	foreach($this->transactions as $transaction){
 
 		extract($transaction);
 		$date = date("M j", strtotime($date));
@@ -16,7 +16,7 @@
 		}
 
 		if ($budget_category_id != 0){
-			$label = '<span class="label label-default">' . $view->budgeted_amounts[$budget_category_id]['category_name'] . '</span>';
+			$label = '<span class="label label-default">' . $this->budgeted_amounts[$budget_category_id]['category_name'] . '</span>';
 		}
 
 		?>
