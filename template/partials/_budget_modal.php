@@ -5,7 +5,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="description"><?php echo $this->title; ?></h4>
 			</div>
-			<form class="form" action="<?php echo $this->action_page; ?>" method="post" autocomplete="off">
+			<form class="form" action="<?php echo $this->action_page; ?>" method="post" autocomplete="off" id="budgetForm">
 				<input type="hidden" name="action" value="update_budget">
 				<div class="modal-body">
 					<table class="table">
@@ -39,7 +39,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="submit" class="btn btn-default">Save</button>
+					<button type="submit" class="btn btn-primary submit" data-toggle="modal" data-target="#budgetModal">Save</button>
 				</div>
 			</form>
 		</div>

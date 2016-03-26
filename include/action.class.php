@@ -19,12 +19,12 @@ class action extends controller {
 
 	function action($post){
 		global $validate;
-		$this->post = $validate->escape($post);
 		if (isset($post['ajax'])){
 			$this->ajax = $post['ajax'];
 			unset($post['ajax']);
 		}
-		if (isset($post['action'])){
+		$this->post = $validate->escape($post);
+		if (isset($this->post['action'])){
 			$action = $this->post['action'];
 			unset($this->post['action']);
 			if ($action == 'update_budget'){

@@ -50,7 +50,7 @@
 					<div class="row margin-top">
 						<div class="col-xs-12">
 							<div class="input-group">
-								<input class="checkbox" type="checkbox" aria-label="..." name="create_trigger" value="true">
+								<input class="checkbox" type="checkbox" aria-label="..." name="create_trigger" value="true" id="alwaysCategorize">
 								Always categorize
 								<select class="form-control inline-form-element" id="select_trigger" name="trigger_type">
 									<option value="description" class="description" selected>Placeholder</option>
@@ -66,7 +66,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#transactionModal">Save</button>
+					<button type="submit" class="btn btn-primary submit" data-toggle="modal" data-target="#transactionModal">Save</button>
 				</div>
 			</form>
 		</div>

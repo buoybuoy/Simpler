@@ -16,6 +16,6 @@
 </div>
 
 <?php
-	$this->load_partial('transaction_modal', false);
-	$this->load_partial('budget_modal', false);
+	$this->load_partial('transaction_modal', true);
+	$this->load_partial('budget_modal', true);
 	$this->load_partial('footer', false);
