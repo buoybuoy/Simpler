@@ -9,8 +9,6 @@ transaction modal
 	make current category 'selected' on select box
 
 budget modal
-	delete category
-	set to 0 to remove from budgeted amounts
 	rename category?
 
 budget table

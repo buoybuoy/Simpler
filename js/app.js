@@ -2,6 +2,8 @@ $(document).ready(function(){
 
 $('#transactionModal').on('show.bs.modal', function (event) {
 
+    $('#alwaysCategorize').prop('checked', false);
+
     var button = $(event.relatedTarget) // Button that triggered the modal
     var date = button.data('date')
     var transactionId = button.data('transactionid') // Extract info from data-* attributes
@@ -22,11 +24,6 @@ $('#transactionModal').on('show.bs.modal', function (event) {
     modal.find('#budgetcategoryid').text(budgetcategoryid)
     modal.find('#amount').text(amount)
 });
-
-$(document).on('show.bs.modal', '#transactionModal', function(){
-    $('#alwaysCategorize').prop('checked', false);
-    console.log('toggled!');
-})
 
 $('.modal .form').append('<input type="hidden" name="ajax" value="true">');
 
