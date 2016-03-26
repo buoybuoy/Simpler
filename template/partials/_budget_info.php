@@ -8,7 +8,7 @@
 <?php foreach ($this->budgeted_amounts as $key => $budgeted_amount){
 	if ($key == 0){
 		echo '<tr class="small">';
-		echo '<td><i>' . $budgeted_amount['category_name'] . '</i></td><td><i>$' . $budgeted_amount['spent'] . '</i></td><td></td>';
+		echo '<td><i>' . $budgeted_amount['category_name'] . '</i></td><td><i>$' . $budgeted_amount['limit'] . '</i></td><td></td>';
 	} else {
 		echo '<tr>';
 		echo '<td>' . $budgeted_amount['category_name'] . '</td><td>$' . $budgeted_amount['spent'] . ' spent</td><td>$' . $budgeted_amount['remaining'] . ' left</td>';

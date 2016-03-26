@@ -3,7 +3,6 @@ budget income
 
 right sidebar
 	zero date
-	total budgeted/spent
 
 transaction modal
 	make current category 'selected' on select box
@@ -11,6 +10,8 @@ transaction modal
 budget modal
 	rename category?
 
-budget table
-	split based on budget categories
+
+
+bugs
+	editing transaction from 'activity' page load ajax response (table, right aside, etc.)
 

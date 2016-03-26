@@ -26,6 +26,8 @@ class controller extends database {
 		$this->set_transactions();
 		$this->total_cash_flow();
 		$this->balance_budget();
+		// echo '<pre>';
+		// var_dump($this->budgeted_amounts); exit;
 	}
 
 	function set_date($get){
@@ -61,7 +63,8 @@ class controller extends database {
 				'year' 					=> 	$budgeted_amount['year'],
 				'limit'					=> 	$budgeted_amount['amount'],
 				'spent'					=> 	0,
-				'remaining'				=> 	$budgeted_amount['amount']
+				'remaining'				=> 	$budgeted_amount['amount'],
+				'transactions'			=>	array()
 			);
 			unset($this->unused_categories[$_id]);
 		}
@@ -73,7 +76,8 @@ class controller extends database {
 			'year' 					=> 	$this->year,
 			'limit'					=> 	0,
 			'spent'					=> 	0,
-			'remaining'				=> 	0
+			'remaining'				=> 	0,
+			'transactions'			=>	array()
 		);
 		unset($this->unused_categories[0]);
 	}
@@ -97,10 +101,20 @@ class controller extends database {
 			if ($transaction_type == 'debit'){
 				$this->budgeted_amounts[$budget_category_id]['spent'] += $amount;
 			}
+			$this->budgeted_amounts[$budget_category_id]['transactions'][$id] = $transaction;
 		}
 		foreach($this->budgeted_amounts as $key => $budget){
 			$remaining = $budget['limit'] - $budget['spent'];
 			$this->budgeted_amounts[$key]['remaining'] = $remaining;
+		}
+	}
+
+	function categorize_transactions(){
+		foreach($this->budgeted_amounts as $key => $budget){
+			$this->budgeted_amount[$key]['transactions'] = array();
+		}
+		foreach($this->transactions as $id => $transaction){
+			// $this->categorized_transactions[ ]
 		}
 	}
 
