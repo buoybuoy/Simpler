@@ -5,7 +5,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="description"><?php echo $this->title; ?></h4>
 			</div>
-			<form class="form" action="<?php echo $this->action_page; ?>" method="post" autocomplete="off" id="budgetForm">
+			<form class="form ajax-form" action="<?php echo $this->action_page; ?>" method="post" autocomplete="off" id="budgetForm">
 				<input type="hidden" name="action" value="update_budget">
 				<div class="modal-body">
 					<table class="table">

@@ -1,0 +1,21 @@
+budget income
+	separate from spending categories
+
+right sidebar
+	zero date
+
+transaction modal
+	make current category 'selected' on select box
+
+budget modal
+	rename category?
+
+upload
+	create view
+	upload new file ability
+
+
+
+bugs
+	editing transaction from 'activity' page load ajax response (table, right aside, etc.)
+

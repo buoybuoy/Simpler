@@ -1,8 +1,25 @@
 <?php
 
-require_once('database.class.php');
-
 class upload extends database {
+
+	public $file;
+
+
+	function __construct($files){
+		parent::__construct();
+		$this->upload_file($files);
+		$this->handle_data();
+	}
+
+	function upload_file($files){
+		global $config;
+		$timestamp = date('Y-m-d_H-i-s');
+		$tempFile = $files['file']['tmp_name'];
+		$targetPath = $config->root_dir . '/upload/data/';
+		$targetFile = $targetPath . $timestamp . '_' . $_FILES['file']['name'];
+		move_uploaded_file($tempFile,$targetFile);
+		$this->file = $targetFile;
+	}
 
 	function dollar($amount){
 		$formatted_amount = round($amount/10000, 2);
@@ -31,7 +48,9 @@ class upload extends database {
 		    `amount` = '$amount',
 		    `running_balance` = '$running_balance'
 		";
-	    $this->raw_statement($sql);
+		// echo '<pre>';
+		// echo $sql;
+		$this->raw_statement($sql);
 	}
 
 	function format_data($raw_simple_data){
@@ -62,7 +81,10 @@ class upload extends database {
 		return $transactions;
 	}
 
-	function handle($raw_simple_data){
+	function handle_data(){
+		$string = file_get_contents($this->file);
+		// echo $string; exit;
+		$raw_simple_data = json_decode($string, true);
 		$transactions = $this->format_data($raw_simple_data);
 		foreach($transactions as $transaction){
 			$this->add_transaction($transaction);
@@ -70,5 +92,3 @@ class upload extends database {
 	}
 
 }
-
-$upload = new upload;

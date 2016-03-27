@@ -5,7 +5,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
 				<h4 class="modal-title">Edit Transaction </h4>
 			</div>
-			<form data-modal="#transactionModal" action="<?php echo $this->action_page; ?>" method="post" autocomplete="off" class="form" id="transactionForm">
+			<form data-modal="#transactionModal" action="<?php echo $this->action_page; ?>" method="post" autocomplete="off" class="form ajax-form" id="transactionForm">
 				<input type="hidden" name="action" value="update_transaction">
 				<input type="hidden" name="id" id="transactionId" value="placeholder">
 				<input type="hidden" name="budget_year" value="<?php echo $this->year; ?>">

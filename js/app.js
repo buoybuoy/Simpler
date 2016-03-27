@@ -28,7 +28,7 @@ $('#transactionModal').on('show.bs.modal', function (event) {
 $('.modal .form').append('<input type="hidden" name="ajax" value="true">');
 
 
-$(document).on('submit', 'form', function(e){
+$(document).on('submit', '.ajax-form', function(e){
     e.preventDefault();
     var $form = $(this);
     $.ajax({

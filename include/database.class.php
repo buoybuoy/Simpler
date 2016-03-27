@@ -4,7 +4,7 @@ require_once('config.class.php');
 
 class database {
 
-	protected $db;
+	public $db;
 	protected $db_host = "localhost";
 	protected $db_name = "simpler";
 	protected $db_port = "3306";

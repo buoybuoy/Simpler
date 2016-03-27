@@ -15,7 +15,6 @@ class view extends controller {
 		$this->set_ajax($get);
 		$this->title = $this->dt->format('F Y');
 		$this->action_page = 'action.php?' . $_SERVER['QUERY_STRING'];
-		$this->load_template();
 	}
 
 	function set_page($get){

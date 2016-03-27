@@ -18,7 +18,7 @@
         <li class="<?php echo $this->is_page_active('budget');?>" ><a href="<?php echo $this->page_link('budget');?>">Budget</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/simpler/upload">Upload</a></li>
+        <li><a href="/simpler/?p=upload">Upload</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
           <ul class="dropdown-menu">
