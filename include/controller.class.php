@@ -26,6 +26,7 @@ class controller extends database {
 		$this->set_transactions();
 		$this->total_cash_flow();
 		$this->balance_budget();
+		$this->get_account_balance();
 		// echo '<pre>';
 		// var_dump($this->budgeted_amounts); exit;
 	}
@@ -127,6 +128,34 @@ class controller extends database {
 			}
 		}
 		$this->total_diff = $this->total_credit - $this->total_debit;
+	}
+
+	function get_account_balance(){
+		$last_transaction = $this->select('*', 'transactions', "ORDER by `date` DESC LIMIT 1");
+		$balance = $last_transaction[0]['running_balance'];
+		return $balance;
+	}
+
+	function budgeted_per_day(){
+		$total_budgeted_amount = 0;
+		foreach ($this->budgeted_amounts as $budgeted_amount){
+			$total_budgeted_amount += $budgeted_amount['limit'];
+		}
+		$per_day = round($total_budgeted_amount/30.42, 2);
+		return $per_day;
+	}
+
+	function zero_date(){
+		$balance = $this->get_account_balance();
+		$per_day = $this->budgeted_per_day();
+		if ($per_day == 0){
+			return 'never';
+		} else {
+			$days_left = round($balance/$per_day, 0);
+			$date = new DateTime('now');
+			$zero_date = $date->modify('+' . $days_left . ' days');
+			return $zero_date->format('M d, Y');
+		}
 	}
 
 	

@@ -56,26 +56,27 @@ class upload extends database {
 	function format_data($raw_simple_data){
 		$transactions = array();
 		foreach($raw_simple_data['transactions'] as $key => $raw_transaction){
+			if (!$raw_transaction['is_hold']){
+				$dt = new DateTime($this->time($raw_transaction['times']['when_recorded']));
 
-			$dt = new DateTime($this->time($raw_transaction['times']['when_recorded']));
+				$transactions[$key]['id'] = $raw_transaction['uuid'];
+				$transactions[$key]['date'] = $this->time($raw_transaction['times']['when_recorded']);
+				$transactions[$key]['last_modified'] = $this->time($raw_transaction['times']['last_modified']);
+				$transactions[$key]['raw_description'] = addslashes($raw_transaction['raw_description']);
+				$transactions[$key]['description'] = addslashes($raw_transaction['description']);
+				$transactions[$key]['memo'] = addslashes($raw_transaction['memo']);
+				$transactions[$key]['category'] = addslashes($raw_transaction['categories'][0]['name']);
+				$transactions[$key]['category_type'] = addslashes($raw_transaction['categories'][0]['folder']);
+				$transactions[$key]['transaction_type'] = $raw_transaction['bookkeeping_type'];
+				$transactions[$key]['amount'] = $this->dollar($raw_transaction['amounts']['amount']);
+				$transactions[$key]['running_balance'] = $this->dollar($raw_transaction['running_balance']);
 
-			$transactions[$key]['id'] = $raw_transaction['uuid'];
-			$transactions[$key]['date'] = $this->time($raw_transaction['times']['when_recorded']);
-			$transactions[$key]['last_modified'] = $this->time($raw_transaction['times']['last_modified']);
-			$transactions[$key]['raw_description'] = addslashes($raw_transaction['raw_description']);
-			$transactions[$key]['description'] = addslashes($raw_transaction['description']);
-			$transactions[$key]['memo'] = addslashes($raw_transaction['memo']);
-			$transactions[$key]['category'] = addslashes($raw_transaction['categories'][0]['name']);
-			$transactions[$key]['category_type'] = addslashes($raw_transaction['categories'][0]['folder']);
-			$transactions[$key]['transaction_type'] = $raw_transaction['bookkeeping_type'];
-			$transactions[$key]['amount'] = $this->dollar($raw_transaction['amounts']['amount']);
-			$transactions[$key]['running_balance'] = $this->dollar($raw_transaction['running_balance']);
+				// run rules to determine budget_category_id
 
-			// run rules to determine budget_category_id
-
-			$transactions[$key]['budget_category_id'] = 0;
-			$transactions[$key]['budget_month'] = date_format($dt, 'm');
-			$transactions[$key]['budget_year'] = date_format($dt, 'Y');
+				$transactions[$key]['budget_category_id'] = 0;
+				$transactions[$key]['budget_month'] = date_format($dt, 'm');
+				$transactions[$key]['budget_year'] = date_format($dt, 'Y');
+			}
 		}
 		//var_dump($transactions); die();
 		return $transactions;

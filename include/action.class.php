@@ -8,7 +8,7 @@ class action extends controller {
 	protected $referer;
 	protected $ajax;
 
-	function __construct($post, $get, $referer){
+	function __construct($post, $get){
 		parent::__construct($get);
 		$this->referer = $referer;
 		$this->action($post);
@@ -37,7 +37,7 @@ class action extends controller {
 		}
 	}
 
-	function redirect($referer){
+	function redirect(){
 		header('Location:' . $this->referer . '&ajax=true');
 	}
 

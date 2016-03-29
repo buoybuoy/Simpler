@@ -16,7 +16,7 @@
 		}
 
 		if ($budget_category_id != 0){
-			$label = '<span class="label label-default">' . $this->budgeted_amounts[$budget_category_id]['category_name'] . '</span>';
+			$label = '<span class="category-label small disabled" style="margin-left: 20px;"><i>' . $this->budgeted_amounts[$budget_category_id]['category_name'] . '</i></span>';
 		}
 
 		?>
