@@ -14,6 +14,7 @@
 		</div>
 	</div>
 </div>
+</div> <!-- #page -->
 
 <?php
 	$this->load_partial('transaction_modal', true);

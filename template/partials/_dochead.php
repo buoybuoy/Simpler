@@ -12,3 +12,4 @@
 	<link rel="stylesheet" href="style/css/style.css" type="text/css">
 </head>
 <body>
+<div id="page">
