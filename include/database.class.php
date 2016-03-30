@@ -50,3 +50,4 @@ class database extends config{
 	}
 }
 
+$database = new database();
