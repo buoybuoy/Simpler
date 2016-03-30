@@ -2,14 +2,9 @@
 
 require_once('config.class.php');
 
-class database {
+class database extends config{
 
 	public $db;
-	protected $db_host = "localhost";
-	protected $db_name = "simpler";
-	protected $db_port = "3306";
-	protected $db_user = "simpler";
-	protected $db_pass = "simpler";
 
 	function __construct(){
 		try {

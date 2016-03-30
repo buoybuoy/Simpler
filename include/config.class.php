@@ -7,6 +7,12 @@ class Config {
 	public $base_url;
 	public $root_dir;
 
+	protected $db_host = "localhost";
+	protected $db_name = "simpler";
+	protected $db_port = "3306";
+	protected $db_user = "simpler";
+	protected $db_pass = "simpler";
+
 	function __construct(){
 		$this->dev = true;
 		date_default_timezone_set("America/Chicago");
