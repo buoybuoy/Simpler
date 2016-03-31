@@ -4,60 +4,29 @@ class model{
 
 	protected $db;
 
-	// public $dt;
-	// public $year;
-	// public $month;
-
-	// public $transactions;
-	// public $budgeted_amounts;
-
-	// public $all_categories;
-	// public $unused_categories;
-
-	// public $total_debit;
-	// public $total_credit;
-	// public $total_diff;
-
 	function __construct($db){
 		$this->db = $db;
-
-		// $this->set_date($get);
-		// $this->set_all_categories();
-		// $this->set_budget();
-		// $this->set_transactions();
-		// $this->total_cash_flow();
-		// $this->balance_budget();
-		// $this->get_account_balance();
 	}
 
-	function set_date($get){
-		$this->year = date("Y");
-		$this->month = date("m");
-		if (isset($get['y'])){
-			$this->year = $get['y'];
-		}
-		if (isset($get['m'])){
-			$this->month = $get['m'];
-		}
-		$this->dt = DateTime::createFromFormat('n Y', $this->month . ' ' . $this->year);
-	}
-
-	function set_all_categories(){
-		$categories = $this->select('*','budget_categories', null);
-		$this->all_categories = array();
+	// gets all budget categories, not time-sensitive. ALL CATEGORIES
+	function get_all_categories(){
+		$categories = $this->db->select('*','budget_categories', null);
+		$all_categories = array();
 		foreach ($categories as $category){
-			$this->all_categories[$category['id']] = $category['name'];
+			$all_categories[$category['id']] = $category['name'];
 		}
-		$this->unused_categories = $this->all_categories;
+		return $all_categories;
 	}
 
-	function set_budget(){
-		$this->budgeted_amounts = array();
-		$raw_budgeted_amounts = $this->select('*','budgeted_amounts', "WHERE `month`=$this->month AND `year`=$this->year ORDER BY `amount` DESC");
+	// get all budgeted amounts for month and year
+	function get_budgeted_amounts($month, $year){
+		$budgeted_amounts = array();
+		$categories = $this->get_all_categories();
+		$raw_budgeted_amounts = $this->db->select('*','budgeted_amounts', "WHERE `month`=$month AND `year`=$year ORDER BY `amount` DESC");
 		foreach ($raw_budgeted_amounts as $budgeted_amount){
 			$_id = $budgeted_amount['budget_category_id'];
-			$this->budgeted_amounts[$_id] = array(
-				'category_name'			=> 	$this->all_categories[$_id],
+			$budgeted_amounts[$_id] = array(
+				'category_name'			=> 	$categories[$_id],
 				'budgeted_amount_id'	=>	$budgeted_amount['id'],
 				'month' 				=> 	$budgeted_amount['month'],
 				'year' 					=> 	$budgeted_amount['year'],
@@ -66,74 +35,67 @@ class model{
 				'remaining'				=> 	$budgeted_amount['amount'],
 				'transactions'			=>	array()
 			);
-			unset($this->unused_categories[$_id]);
 		}
-		unset($this->budgeted_amounts[0]);
-		$this->budgeted_amounts[0] = array(
+		unset($budgeted_amounts[0]);
+		$budgeted_amounts[0] = array(
 			'category_name'			=> 	'uncategorized',
 			'budgeted_amount_id'	=>	0,
-			'month' 				=> 	$this->month,
-			'year' 					=> 	$this->year,
+			'month' 				=> 	$month,
+			'year' 					=> 	$year,
 			'limit'					=> 	0,
 			'spent'					=> 	0,
 			'remaining'				=> 	0,
 			'transactions'			=>	array()
 		);
-		unset($this->unused_categories[0]);
+		return $budgeted_amounts;
 	}
 
-	function set_transactions(){
-		$this->transactions = array();
-		$raw_transactions = $this->select('*','transactions', "WHERE `budget_month` = $this->month AND `budget_year` = $this->year ORDER BY `date` DESC");
+	function get_month_transactions($month, $year){
+		$transactions = array();
+		$raw_transactions = $this->db->select('*','transactions', "WHERE `budget_month` = $month AND `budget_year` = $year ORDER BY `date` DESC");
 		foreach($raw_transactions as $raw_transaction){
-			$this->transactions[$raw_transaction['id']] = $raw_transaction;
+			$transactions[$raw_transaction['id']] = $raw_transaction;
 		}
+		return $transactions;
 	}
 
-	function balance_budget(){
-		foreach($this->transactions as $key => $transaction){
-			if (!array_key_exists($transaction['budget_category_id'], $this->budgeted_amounts)){
-				$this->transactions[$key]['budget_category_id'] = 0; 
+	function categorize_transactions($budgeted_amounts, $transactions){
+		foreach ($transactions as $transaction){
+			if (!array_key_exists($transaction['budget_category_id'], $budgeted_amounts)){
+				$transaction['budget_category_id'] = 0;
 			}
-		}
-		foreach($this->transactions as $key => $transaction){
-			extract($transaction);
-			if ($transaction_type == 'debit'){
-				$this->budgeted_amounts[$budget_category_id]['spent'] += $amount;
-			}
-			$this->budgeted_amounts[$budget_category_id]['transactions'][$id] = $transaction;
-		}
-		foreach($this->budgeted_amounts as $key => $budget){
-			$remaining = $budget['limit'] - $budget['spent'];
-			$this->budgeted_amounts[$key]['remaining'] = $remaining;
-		}
-	}
-
-	function categorize_transactions(){
-		foreach($this->budgeted_amounts as $key => $budget){
-			$this->budgeted_amount[$key]['transactions'] = array();
-		}
-		foreach($this->transactions as $id => $transaction){
-			// $this->categorized_transactions[ ]
-		}
-	}
-
-	function total_cash_flow(){
-		foreach ($this->transactions as $transaction){
+			$budgeted_amounts[ $transaction['budget_category_id'] ]['transactions'][ $transaction['id'] ] = $transaction;
 			if ($transaction['transaction_type'] == 'debit'){
-				$this->total_debit = $this->total_debit + $transaction['amount'];
-			} else {
-				$this->total_credit = $this->total_credit + $transaction['amount'];
+				$budgeted_amounts[ $transaction['budget_category_id'] ]['spent'] += $transaction['amount'];
 			}
 		}
-		$this->total_diff = $this->total_credit - $this->total_debit;
+		foreach ($budgeted_amounts as $key => $budgeted_amount){
+			$budgeted_amounts[$key]['remaining'] = $budgeted_amount['limit'] - $budgeted_amount['spent'];
+		}
+		return $budgeted_amounts;
 	}
 
-	function get_account_balance(){
-		$last_transaction = $this->select('*', 'transactions', "ORDER by `date` DESC LIMIT 1");
-		$balance = $last_transaction[0]['running_balance'];
+	// returns running_balance of the last transaction of the month and year given
+	function get_account_balance($month, $year){
+		$dt = DateTime::createFromFormat('d n Y', 15 . ' ' . $month . ' ' . $year);
+		$month = $dt->format('Y-m-d');
+		$transaction = $this->db->select('*', 'transactions', "WHERE MONTH(`date`)=MONTH('$month') ORDER by `date` DESC LIMIT 1");
+		$balance = $transaction[0]['running_balance'];
 		return $balance;
 	}
+
+	// not converted due to necessity
+	//
+	// function total_cash_flow(){
+	// 	foreach ($this->transactions as $transaction){
+	// 		if ($transaction['transaction_type'] == 'debit'){
+	// 			$this->total_debit = $this->total_debit + $transaction['amount'];
+	// 		} else {
+	// 			$this->total_credit = $this->total_credit + $transaction['amount'];
+	// 		}
+	// 	}
+	// 	$this->total_diff = $this->total_credit - $this->total_debit;
+	// }
 
 	function budgeted_per_day(){
 		$total_budgeted_amount = 0;
