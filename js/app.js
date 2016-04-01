@@ -55,7 +55,7 @@ $(document).on('click', '.delete-category', function(e){
         budget_category_id: budgetcategoryid,
         ajax: true
     };
-    var url = '/simpler/' + button.data('url');
+    var url = button.data('url');
     $.ajax({
         type     : "POST",
         cache    : false,
@@ -64,10 +64,9 @@ $(document).on('click', '.delete-category', function(e){
         success  : function(data) {
 
             replaceWithResponse( data );
-        
+            $(deleteRow).remove();
         }
     });
-    $(deleteRow).remove();
 });
 
 function replaceWithResponse( data ){

@@ -23,13 +23,13 @@
 								<thead>
 									<th>Add New Budget Category</th>
 								</thead>
-								<?php foreach ($unused_categories as $key => $category){ ?>
+								<?php if (!empty($unused_categories)) { foreach ($unused_categories as $key => $category){ ?>
 									<tr id="<?php echo $key; ?>">
 										<td><?php echo $category ?></td>
 										<td><input type="text" class="form-control table-input" placeholder="Amount" name="<?php echo $key; ?>"></td>
 										<td><a href="#" class="btn btn-danger delete-category" data-budgetcategoryid="<?php echo $key; ?>" data-url="<?php echo $action_page; ?>"><i class="fa fa-close"></i></a></td>
 									</tr>
-								<?php } ?>
+								<?php } } ?>
 								<tr>
 									<td><input type="text" class="form-control table-input" placeholder="New Category" name="new_category_name"></td>
 									<td><input type="text" class="form-control table-input" placeholder="Amount" name="new_category_amount"></td>

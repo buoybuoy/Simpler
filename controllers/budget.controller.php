@@ -2,33 +2,27 @@
 
 	require_once($config->root_dir . 'include/database.class.php');
 	require_once($config->root_dir . 'models/budget.model.php');
-	$model = new model($database);
+	$budgetModel = new budget($database);
 
-	$year = date("Y");
-	$month = date("m");
-	if (isset($_GET['y'])){
-		$year = $_GET['y'];
-	}
-	if (isset($_GET['m'])){
-		$month = $_GET['m'];
-	}
+	require_once($config->root_dir . 'controllers/controller.class.php');
+	$controller = new controller();
 
-	$budgeted_amounts = $model->categorize_transactions(
-		$model->get_budgeted_amounts($month, $year),
-		$model->get_month_transactions($month, $year)
-	);
+	$controller->set_month_and_year($_GET);
 
-	$all_categories = $model->get_all_categories();
-	$unused_categories = $all_categories;
-	foreach ($budgeted_amounts as $key => $budgeted_amount){
-		unset($unused_categories[$key]);
-	}
-	
-	$balance = $model->get_account_balance($month, $year);
+	$month = $controller->month;
+	$year = $controller->year;
 
+	$budgetModel->initialize_month_budget($month, $year);
+
+	// globalizing initialize_month_budget created variables
+	$budgeted_amounts = $budgetModel->month_budget;
+	$all_categories = $budgetModel->all_categories;	
+	$unused_categories = $budgetModel->unused_categories;
+	$balance = $budgetModel->account_balance;
+
+	// temporary until v2 launch
 	$title = 'test';
-
-	$action_page = $config->base_url . 'action.php';
+	$action_page = $config->base_url . 'test/?p=action&m=' . $month . '&y=' . $year;
 
 	require_once($config->root_dir . 'views/view.class.php');
 	require_once($config->root_dir . 'views/budget.template.php');
