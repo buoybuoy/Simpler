@@ -161,6 +161,27 @@ class budget extends model{
 		}
 	}
 
+	function add_transactions($transactions){
+		foreach($transactions as $transaction){
+			$table = 'transactions';
+			$fields = '`' . implode('`,`', array_keys($transaction)) . '`';
+			$values = "'" . implode("','", $transaction) . "'";
+			extract($transaction);
+		    $sql = "INSERT INTO {$table} ($fields) VALUES($values) ON DUPLICATE KEY UPDATE
+			    `date` = '$date',
+			    `last_modified` = '$last_modified',
+			    `raw_description` = '$raw_description',
+			    `description` = '$description',
+			    `memo` = '$memo',
+			    `category` = '$category',
+			    `transaction_type` = '$transaction_type',
+			    `amount` = '$amount',
+			    `running_balance` = '$running_balance'
+			";
+			$this->db->raw_statement($sql);
+		}
+	}
+
 	function update_transaction($month, $year, $post){
 		$table = 'transactions';
 		extract($post);

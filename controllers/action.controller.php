@@ -33,7 +33,6 @@
 
 			if ($action == 'update_budget'){
 				$budgetModel->update_budget($month, $year, $post);
-				$budgetModel->clean_database();
 			}
 
 			elseif ($action == 'update_transaction'){
@@ -42,8 +41,8 @@
 
 			elseif ($action == 'delete_category'){
 				$budgetModel->delete_category($post['budget_category_id']);
-				$budgetModel->clean_database();
 			}
+			$budgetModel->clean_database();
 		}
 
 	}
