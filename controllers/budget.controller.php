@@ -22,7 +22,7 @@
 
 	// temporary until v2 launch
 	$title = 'test';
-	$action_page = $config->base_url . 'test/?p=action&m=' . $month . '&y=' . $year;
+	$action_page = $config->base_url . '?p=action&m=' . $month . '&y=' . $year;
 
 	require_once($config->root_dir . 'views/view.class.php');
 	require_once($config->root_dir . 'views/budget.template.php');

@@ -12,7 +12,7 @@
 		$uploadModel->upload_file($_FILES);
 		header('Location:' . $config->base_url);
 	} else {
-		$action_page = $config->base_url . 'test/?p=upload';
+		$action_page = $config->base_url . '?p=upload';
 		require_once($config->root_dir . 'views/view.class.php');
 		require_once($config->root_dir . 'views/upload.template.php');
 	}

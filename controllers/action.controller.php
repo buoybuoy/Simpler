@@ -56,10 +56,10 @@
 		$all_categories = $budgetModel->all_categories;	
 		$unused_categories = $budgetModel->unused_categories;
 		$balance = $budgetModel->account_balance;
-		$action_page = $config->base_url . 'test/?p=action&m=' . $month . '&y=' . $year;
+		$action_page = $config->base_url . '?p=action&m=' . $month . '&y=' . $year;
 		require_once($config->root_dir . 'views/view.class.php');
 		require_once($config->root_dir . 'views/ajax.template.php');
 	} else {
 		// fix this with logic to get referer and handle cache
-		header('Location:' . $config->base_url . 'test');
+		header('Location:' . $config->base_url);
 	}

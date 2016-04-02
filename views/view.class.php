@@ -59,6 +59,11 @@ class view{
 		return $tag;
 	}
 
+	function title($month, $year){
+		$dt = DateTime::createFromFormat('n Y', $month . ' ' . $year);
+		return $dt->format('F Y');
+	}
+
 	// function diff_class(){
 	// 	if ($this->total_diff < 0){
 	// 		$diff_class = 'negative';
