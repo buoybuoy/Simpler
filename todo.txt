@@ -17,12 +17,7 @@ upload
 
 bugs
 	editing transaction from 'activity' page load ajax response (table, right aside, etc.)
+		- activity page removed for now (might not add back)
 
-	simple changes ID when going from 'hold' to 'journalentry', causing duplicate transactions
-		add database column for 'is_hold'
-		on database cleaning check if any transactions with 'is_hold' = true has same exact date as other transaction
-			update duplicate transaction with hold's budget_category_id, budget_month, and budget_year
-			delete transaction with 'is_hold' = true
-
-		or just don't add any transactions where 'is_hold' = true
+	adding new category (using text inputs) doesn't create budgeted amount
 

@@ -21,9 +21,9 @@
 
 	if (isset($_POST)){
 
-		if (isset($post['ajax'])){
-			$ajax = $post['ajax'];
-			unset($post['ajax']);
+		if (isset($_POST['ajax'])){
+			$ajax = $_POST['ajax'];
+			unset($_POST['ajax']);
 		}
 
 		$post = $validate->escape($_POST);

@@ -37,7 +37,7 @@ $(document).on('submit', '.ajax-form', function(e){
         url      : $form.attr('action'),
         data     : $form.serializeArray(),
         success  : function(data) {
-
+            // console.log(data);
             replaceWithResponse( data );
         
         }
