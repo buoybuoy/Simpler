@@ -13,9 +13,9 @@
 	require_once($config->root_dir . 'helpers/cache.class.php');
 	$cache = new cache;
 
-	$controller->set_month_and_year($_GET);
-	$month = $controller->month;
-	$year = $controller->year;
+	// $controller->set_month_and_year($_GET);
+	// $month = $controller->month;
+	// $year = $controller->year;
 
 	$ajax = false;
 
@@ -56,7 +56,7 @@
 		$all_categories = $budgetModel->all_categories;	
 		$unused_categories = $budgetModel->unused_categories;
 		$balance = $budgetModel->account_balance;
-		$action_page = $config->base_url . '?p=action&m=' . $month . '&y=' . $year;
+		$action_page = $config->base_url . 'action/' . $year. '/' . $month;
 		require_once($config->root_dir . 'views/view.class.php');
 		require_once($config->root_dir . 'views/ajax.template.php');
 	} else {

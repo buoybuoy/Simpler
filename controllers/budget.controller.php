@@ -7,10 +7,10 @@
 	require_once($config->root_dir . 'controllers/controller.class.php');
 	$controller = new controller();
 
-	$controller->set_month_and_year($_GET);
+	// $controller->set_month_and_year($_GET);
 
-	$month = $controller->month;
-	$year = $controller->year;
+	// $month = $controller->month;
+	// $year = $controller->year;
 
 	$budgetModel->initialize_month_budget($month, $year);
 
@@ -22,7 +22,7 @@
 
 	// temporary until v2 launch
 	$title = 'test';
-	$action_page = $config->base_url . '?p=action&m=' . $month . '&y=' . $year;
+	$action_page = $config->base_url . 'action/' . $year . '/' . $month;
 
 	require_once($config->root_dir . 'views/view.class.php');
 	require_once($config->root_dir . 'views/budget.template.php');

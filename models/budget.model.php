@@ -14,13 +14,14 @@ class budget extends model{
 	}
 
 	function initialize_month_budget($month, $year){
-		$this->month_budget = $this->categorize_transactions(
-			$this->get_budgeted_amounts($month, $year),
-			$this->get_month_transactions($month, $year)
-		);
+		$month_transactions = $this->get_month_transactions($month, $year);
+		$budgeted_amounts = $this->get_budgeted_amounts($month, $year);
+		$this->month_budget = $this->categorize_transactions($budgeted_amounts, $month_transactions);
 		$this->all_categories = $this->get_all_categories();	
 		$this->unused_categories = $this->get_unused_categories($month, $year, $this->month_budget);
-		$this->account_balance = $this->get_account_balance($month, $year);
+		if (!empty($month_transactions)){
+			$this->account_balance = $this->get_account_balance($month, $year);
+		}
 	}
 
 	// gets all budget categories, not time-sensitive. ALL CATEGORIES

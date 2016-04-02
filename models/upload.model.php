@@ -10,7 +10,7 @@ class upload extends budget {
 		global $config;
 		$timestamp = date('Y-m-d_H-i-s');
 		$tempFile = $files['file']['tmp_name'];
-		$targetPath = $config->root_dir . '/upload/data/';
+		$targetPath = $config->root_dir . '/data/';
 		$targetFile = $targetPath . $timestamp . '_' . $_FILES['file']['name'];
 		move_uploaded_file($tempFile,$targetFile);
 		$transactions = $this->get_uploaded_data($targetFile);

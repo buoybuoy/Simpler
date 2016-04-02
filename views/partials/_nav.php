@@ -16,12 +16,13 @@
       <ul class="nav navbar-nav nav-left">
 
         <!-- add back logic to determine which page is active and get correct links -->
-        <li><a href="#">Activity</a></li>
-        <li class="active" ><a href="#">Budget</a></li>
+        <!-- <li><a href="#">Activity</a></li> -->
+        
+          <li class="<?php if ($load_controller == 'budget'){ echo 'active'; }?>"><a href="<?php echo $config->base_url; ?>">Budget</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/simpler/?p=upload">Upload</a></li>
+        <li><a href="<?php echo $config->base_url . 'upload'; ?>">Upload</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
           <ul class="dropdown-menu">

@@ -52,7 +52,7 @@ class view{
 			$_text = '<i class="fa fa-angle-left"></i>';
 		}
 
-		$link_location = $config->base_url . '?m=' . $_month . '&y=' . $_year . '&p=budget';
+		$link_location = $config->base_url . 'budget/' . $_year . '/' . $_month;
 		// figure out how to handle referal page above
 		
 		$tag = '<a href="' . $link_location . '" class="month_nav ' . $_class . '">' . $_text . '</a>';
